@@ -32,23 +32,18 @@
     <div class="container">
         <div>
             <table id="tableArea" class="table table-hover">
-                <thead>
-                    <tr>
+                <thead id="tableHeadArea">
+                    <tr id="trHead">
                         <th>
                             <button type="button" class="btn btn-default" onclick="switchTableType()">
                                 <span id="tableTypeIcon" aria-hidden="true"></span>
                             </button>
                         </th>
-                        <th>Mon</th>
-                        <th>Tue</th>
-                        <th>Wed</th>
-                        <th>Thu</th>
-                        <th>Fri</th>
-                        <th>Sat</th>
+                        <!-- create tabel head dynamically -->
                     </tr>
                 </thead>
                 <tbody id="tableBodyArea">
-                    <!-- create table dynamically -->
+                    <!-- create table body dynamically -->
                 </tbody>
             </table>
         </div>
@@ -66,6 +61,30 @@ function initTimeTable() {
 }
 
 function initElmt() {
+    // define table
+    var tableWeekLenght = 6;
+    var tableClassLenght = 15;
+    var tableHead = document.getElementById("tableHeadArea");  
+    var trHead = document.getElementById("trHead");
+    var tableBody = document.getElementById("tableBodyArea");
+    // append table head
+    var txtHead = [{"week":"Mon"},{"week":"Tue"},{"week":"Wed"},{"week":"Thu"},{"week":"Fri"},{"week":"Sat"},]
+    for (var i = 0; i < tableWeekLenght; i++) {
+        var th = document.createElement('th');
+        trHead.appendChild(th);
+        trHead.cells[i+1].appendChild(document.createTextNode(txtHead[i].week));
+    };
+    // // append table body
+    for (var i = 0; i <= tableClassLenght - 1; i++) {
+        var tr = document.createElement('tr');
+        // append class cell
+        for (var j = 0; j <= 6; j++) {
+            var td = document.createElement('td');
+            tr.appendChild(td);
+        };
+        tableBody.appendChild(tr);
+        tr.cells[0].appendChild(document.createTextNode(i + 1));
+    };
     setTableType();
 }
 

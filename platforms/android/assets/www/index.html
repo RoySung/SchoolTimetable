@@ -13,11 +13,10 @@
     <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
 </head>
 
-
 <body>
-    <nav class="navbar navbar-default" role="navigation">
-    	<a class="navbar-brand" href="/">SchoolTimeTable</a>
-        <div id="dropdown-menu"class="dropdown pull-right">
+    <nav id="header" class="navbar navbar-default" role="navigation">
+        <a class="navbar-brand" href="/">SchoolTimeTable</a>
+        <div id="dropdown-menu" class="dropdown pull-right">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
             </button>
@@ -30,10 +29,84 @@
             </ul>
         </div>
     </nav>
+    <div class="container">
+        <div>
+            <table id="tableArea" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <button type="button" class="btn btn-default" onclick="switchTableType()">
+                                <span id="tableTypeIcon" aria-hidden="true"></span>
+                            </button>
+                        </th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBodyArea">
+                    <!-- create table dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
+
 </html>
+<script type="text/javascript">
+var timeTable = new initTimeTable();
+initElmt();
+
+function initTimeTable() {
+    this.tableType = "day";
+    this.mode = "normal";
+}
+
+function initElmt() {
+    setTableType();
+}
+
+function setTableType() {
+    switch (timeTable.tableType) {
+        case "day":
+            document.getElementById("tableTypeIcon").className = "fa fa-fw fa-sun-o";
+            break;
+        case "night":
+            document.getElementById("tableTypeIcon").className = "fa fa-fw fa-moon-o";
+            break;
+        case "both":
+            document.getElementById("tableTypeIcon").className = "fa fa-fw fa-star-o";
+            break;
+    }
+}
+
+function switchTableType() {
+    switch (timeTable.tableType) {
+        case "day":
+            // switch to night
+            timeTable.tableType = "night";
+            break;
+        case "night":
+            // switch to both
+            timeTable.tableType = "both";
+            break;
+        case "both":
+            // switch to day
+            timeTable.tableType = "day";
+            break;
+    }
+    setTableType();
+}
+</script>
 <style type="text/css" media="screen">
-	#dropdown-menu {
-		margin: 10px;
-	}
+#header {
+    margin-bottom: 0px;
+}
+
+#dropdown-menu {
+    margin: 10px;
+}
 </style>

@@ -31,7 +31,7 @@
     </nav>
     <div class="container">
         <div>
-            <table id="tableArea" class="table table-hover">
+            <table id="tableArea" class="table table-bordered">
                 <thead id="tableHeadArea">
                     <tr id="trHead">
                         <th>
@@ -69,13 +69,13 @@ function initElmt() {
     var trHead = document.getElementById("trHead");
     var tableBody = document.getElementById("tableBodyArea");
     // append table head
-    var txtHead = [{"week":"Mon"},{"week":"Tue"},{"week":"Wed"},{"week":"Thu"},{"week":"Fri"},{"week":"Sat"},]
+    var txtHead = [{"week":"Mon"},{"week":"Tue"},{"week":"Wed"},{"week":"Thu"},{"week":"Fri"},{"week":"Sat"}]
     for (var i = 0; i < tableWeekLenght; i++) {
         var th = document.createElement('th');
         trHead.appendChild(th);
         trHead.cells[i+1].appendChild(document.createTextNode(txtHead[i].week));
     };
-    // // append table body
+    // append table body
     for (var i = 0; i <= tableClassLenght - 1; i++) {
         var tr = document.createElement('tr');
         // append class cell
@@ -84,7 +84,7 @@ function initElmt() {
             tr.appendChild(td);
         };
         tableBody.appendChild(tr);
-        tr.cells[0].appendChild(document.createTextNode(i + 1));
+        tr.cells[0].appendChild(document.createTextNode(i+1));
     };
     setTableType();
 }
@@ -93,11 +93,29 @@ function setTableType() {
     switch (timeTable.tableType) {
         case "day":
             document.getElementById("tableTypeIcon").className = "fa fa-fw fa-sun-o";
+            for (var i = 0; i <= 15; i++) {
+                if (i <= 9) {
+                    document.getElementById("tableArea").rows[i].className = "displayTrue";
+                } else{
+                    document.getElementById("tableArea").rows[i].className = "displayNone";
+                };
+            };
             break;
         case "night":
             document.getElementById("tableTypeIcon").className = "fa fa-fw fa-moon-o";
+            for (var i = 0; i <= 15; i++) {
+                if (i > 9) {
+                    document.getElementById("tableArea").rows[i].className = "displayTrue";
+                } else{
+                    document.getElementById("tableArea").rows[i].className = "displayNone";
+                };
+                document.getElementById("tableArea").rows[0].className = "displayTrue";
+            };
             break;
         case "both":
+            for (var i = 0; i <= 15; i++) {
+                document.getElementById("tableArea").rows[i].className = "displayTrue";
+            };
             document.getElementById("tableTypeIcon").className = "fa fa-fw fa-star-o";
             break;
     }
@@ -128,5 +146,9 @@ function switchTableType() {
 
 #dropdown-menu {
     margin: 10px;
+}
+
+.displayNone {
+    display: none;
 }
 </style>

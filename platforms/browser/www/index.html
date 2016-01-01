@@ -48,6 +48,25 @@
             </table>
         </div>
     </div>
+    <!-- Modal Element -->
+    <div class="modal fade" id="modal-ClassInfo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Class Information</h4>
+                </div>
+                <div class="modal-body">
+                    <p>ClassName:</p>
+                    <p>ClassRoom:</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal Element -->
 </body>
 
 </html>
@@ -65,15 +84,27 @@ function initElmt() {
     // define table
     var tableWeekLenght = 6;
     var tableClassLenght = 15;
-    var tableHead = document.getElementById("tableHeadArea");  
+    var tableHead = document.getElementById("tableHeadArea");
     var trHead = document.getElementById("trHead");
     var tableBody = document.getElementById("tableBodyArea");
     // append table head
-    var txtHead = [{"week":"Mon"},{"week":"Tue"},{"week":"Wed"},{"week":"Thu"},{"week":"Fri"},{"week":"Sat"}]
+    var txtHead = [{
+        "week": "Mon"
+    }, {
+        "week": "Tue"
+    }, {
+        "week": "Wed"
+    }, {
+        "week": "Thu"
+    }, {
+        "week": "Fri"
+    }, {
+        "week": "Sat"
+    }];
     for (var i = 0; i < tableWeekLenght; i++) {
         var th = document.createElement('th');
         trHead.appendChild(th);
-        trHead.cells[i+1].appendChild(document.createTextNode(txtHead[i].week));
+        trHead.cells[i + 1].appendChild(document.createTextNode(txtHead[i].week));
     };
     // append table body
     for (var i = 0; i <= tableClassLenght - 1; i++) {
@@ -81,10 +112,12 @@ function initElmt() {
         // append class cell
         for (var j = 0; j <= 6; j++) {
             var td = document.createElement('td');
+            td.className = "classCells";
+            td.addEventListener("click", openClassModal);
             tr.appendChild(td);
         };
         tableBody.appendChild(tr);
-        tr.cells[0].appendChild(document.createTextNode(i+1));
+        tr.cells[0].appendChild(document.createTextNode(i + 1));
     };
     setTableType();
 }
@@ -96,7 +129,7 @@ function setTableType() {
             for (var i = 0; i <= 15; i++) {
                 if (i <= 9) {
                     document.getElementById("tableArea").rows[i].className = "displayTrue";
-                } else{
+                } else {
                     document.getElementById("tableArea").rows[i].className = "displayNone";
                 };
             };
@@ -106,7 +139,7 @@ function setTableType() {
             for (var i = 0; i <= 15; i++) {
                 if (i > 9) {
                     document.getElementById("tableArea").rows[i].className = "displayTrue";
-                } else{
+                } else {
                     document.getElementById("tableArea").rows[i].className = "displayNone";
                 };
                 document.getElementById("tableArea").rows[0].className = "displayTrue";
@@ -138,6 +171,20 @@ function switchTableType() {
     }
     setTableType();
 }
+
+function openClassModal() {
+    if (this.cellIndex != 0) {
+        switch (timeTable.mode) {
+            case "normal":
+                $('#modal-ClassInfo').modal("show");
+                break;
+            case "edit":
+                break;
+        }
+    };
+
+    // alert("row:"+this.parentNode.rowIndex+";cell:"+this.cellIndex);
+}
 </script>
 <style type="text/css" media="screen">
 #header {
@@ -150,5 +197,9 @@ function switchTableType() {
 
 .displayNone {
     display: none;
+}
+
+.classCells:hover {
+    background-color: #efefef;
 }
 </style>

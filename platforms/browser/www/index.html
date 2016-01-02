@@ -213,6 +213,7 @@ function switchMode() {
             break;
         case "edit":
             // switch to view
+            clearSelected();
             timeTable.mode = "view";
             break;
     }
@@ -256,6 +257,10 @@ function edit() {
 }
 
 function restore () {
+    clearSelected();
+}
+
+function clearSelected () {
     var table = document.getElementById("tableArea");
     for (var i = timeTable.onSelected.length - 1; i >= 0; i--) {
         var target = table.rows[timeTable.onSelected[i].row].cells[timeTable.onSelected[i].cell];

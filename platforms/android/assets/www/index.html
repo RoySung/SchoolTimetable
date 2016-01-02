@@ -35,10 +35,10 @@
         <button type="button" class="btn btn-default" onclick="switchMode()">
             <span id="ModeIcon" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-default" onclick="edit()">
+        <button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
             <span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-default" onclick="restore()">
+        <button type="button" id="restoreBtn" class="btn btn-default" onclick="restore()">
             <span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
         </button>
         <div>
@@ -189,9 +189,18 @@ function setMode() {
     switch (timeTable.mode) {
         case "view":
             document.getElementById("ModeIcon").className = "fa fa-fw fa-eye";
+            document.getElementById("editBtn").classList.add("displayNone");
+            document.getElementById("editBtn").classList.remove("displayTrue");
+            document.getElementById("restoreBtn").classList.add("displayNone");
+            document.getElementById("restoreBtn").classList.remove("displayTrue");
+
             break;
         case "edit":
             document.getElementById("ModeIcon").className = "fa fa-fw fa-pencil";
+            document.getElementById("editBtn").classList.add("displayTrue");
+            document.getElementById("editBtn").classList.remove("displayNone");
+            document.getElementById("restoreBtn").classList.add("displayTrue");
+            document.getElementById("restoreBtn").classList.remove("displayNone");
             break;
     }
 }
@@ -266,10 +275,6 @@ function restore () {
 
 .displayNone {
     display: none;
-}
-
-.classCells:hover {
-    background-color: #efefef;
 }
 
 .selected {

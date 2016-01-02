@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    <!-- Header Navbar -->
     <nav id="header" class="navbar navbar-default" role="navigation">
         <a class="navbar-brand" href="/">SchoolTimeTable</a>
         <div id="dropdown-menu" class="dropdown pull-right">
@@ -29,7 +30,11 @@
             </ul>
         </div>
     </nav>
+    <!-- End Header Navbar -->
     <div class="container">
+        <button type="button" class="btn btn-default" onclick="switchMode()">
+            <span id="ModeIcon" aria-hidden="true"></span>
+        </button>
         <div>
             <table id="tableArea" class="table table-bordered">
                 <thead id="tableHeadArea">
@@ -77,7 +82,7 @@ initElmt();
 
 function initTimeTable() {
     this.tableType = "day";
-    this.mode = "normal";
+    this.mode = "view";
 }
 
 function initElmt() {
@@ -120,6 +125,7 @@ function initElmt() {
         tr.cells[0].appendChild(document.createTextNode(i + 1));
     };
     setTableType();
+    setMode();
 }
 
 function setTableType() {
@@ -172,10 +178,35 @@ function switchTableType() {
     setTableType();
 }
 
+function setMode () {
+    switch (timeTable.mode) {
+        case "view":
+            document.getElementById("ModeIcon").className = "fa fa-fw fa-eye";
+            break;
+        case "edit":
+            document.getElementById("ModeIcon").className = "fa fa-fw fa-pencil";
+            break;
+    }
+}
+
+function switchMode () {
+    switch (timeTable.mode) {
+        case "view":
+            // switch to edit
+            timeTable.mode = "edit";
+            break;
+        case "edit":
+            // switch to normal
+            timeTable.mode = "view";
+            break;
+    }
+    setMode();
+}
+
 function openClassModal() {
     if (this.cellIndex != 0) {
         switch (timeTable.mode) {
-            case "normal":
+            case "view":
                 $('#modal-ClassInfo').modal("show");
                 break;
             case "edit":

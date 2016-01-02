@@ -35,6 +35,12 @@
         <button type="button" class="btn btn-default" onclick="switchMode()">
             <span id="ModeIcon" aria-hidden="true"></span>
         </button>
+        <button type="button" class="btn btn-default" onclick="edit()">
+            <span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default" onclick="restore()">
+            <span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
+        </button>
         <div>
             <table id="tableArea" class="table table-bordered">
                 <thead id="tableHeadArea">
@@ -83,6 +89,7 @@ initElmt();
 function initTimeTable() {
     this.tableType = "day";
     this.mode = "view";
+    this.onSelected = new Array();
 }
 
 function initElmt() {
@@ -118,7 +125,7 @@ function initElmt() {
         for (var j = 0; j <= 6; j++) {
             var td = document.createElement('td');
             td.className = "classCells";
-            td.addEventListener("click", openClassModal);
+            td.addEventListener("click", ClassEvent);
             tr.appendChild(td);
         };
         tableBody.appendChild(tr);
@@ -178,7 +185,7 @@ function switchTableType() {
     setTableType();
 }
 
-function setMode () {
+function setMode() {
     switch (timeTable.mode) {
         case "view":
             document.getElementById("ModeIcon").className = "fa fa-fw fa-eye";
@@ -189,31 +196,63 @@ function setMode () {
     }
 }
 
-function switchMode () {
+function switchMode() {
     switch (timeTable.mode) {
         case "view":
             // switch to edit
             timeTable.mode = "edit";
             break;
         case "edit":
-            // switch to normal
+            // switch to view
             timeTable.mode = "view";
             break;
     }
     setMode();
 }
 
-function openClassModal() {
+function ClassEvent() {
+    var table = document.getElementById("tableArea");
     if (this.cellIndex != 0) {
         switch (timeTable.mode) {
             case "view":
                 $('#modal-ClassInfo').modal("show");
                 break;
             case "edit":
+                var target = table.rows[this.parentNode.rowIndex].cells[this.cellIndex];
+                if (target.classList.contains("selected")) {
+                    for (var i = timeTable.onSelected.length - 1; i >= 0; i--) {
+                        if (timeTable.onSelected[i].row == this.parentNode.rowIndex && timeTable.onSelected[i].cell == this.cellIndex) {
+                            var rmIndex = i;
+                        };
+                    };
+                    if (rmIndex > -1) {
+                        timeTable.onSelected.splice(rmIndex, 1);
+                    }
+                    target.classList.remove("selected");
+                } else {
+                    timeTable.onSelected.push({
+                        "row": this.parentNode.rowIndex,
+                        "cell": this.cellIndex
+                    });
+                    target.classList.add("selected");
+                };
+
                 break;
         }
     };
-    // alert("row:"+this.parentNode.rowIndex+";cell:"+this.cellIndex);
+}
+
+function edit() {
+    console.log(timeTable.onSelected);
+}
+
+function restore () {
+    var table = document.getElementById("tableArea");
+    for (var i = timeTable.onSelected.length - 1; i >= 0; i--) {
+        var target = table.rows[timeTable.onSelected[i].row].cells[timeTable.onSelected[i].cell];
+        target.classList.remove("selected");
+    };
+    timeTable.onSelected.splice(0,timeTable.onSelected.length);
 }
 </script>
 <style type="text/css" media="screen">
@@ -231,5 +270,9 @@ function openClassModal() {
 
 .classCells:hover {
     background-color: #efefef;
+}
+
+.selected {
+    background-color: #5E9FF2;
 }
 </style>

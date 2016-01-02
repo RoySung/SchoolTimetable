@@ -26,7 +26,7 @@
                 <li role="separator" class="divider"></li>
                 <li><a data-toggle="modal" href='#modal-Import'>Import</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">About</a></li>
+                <li><a data-toggle="modal" href='#modal-About'>About</a></li>
             </ul>
         </div>
     </nav>
@@ -98,8 +98,7 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="remind">
-                                    Checkbox
+                                    <input type="checkbox" value="remind"> Checkbox
                                 </label>
                             </div>
                             <select id="input" class="form-control">
@@ -124,7 +123,7 @@
                     <h4 class="modal-title">Export</h4>
                 </div>
                 <div class="modal-body">
-                    <button type="button" class="btn btn-large btn-block btn-primary">Export Json File</button>                    
+                    <button type="button" class="btn btn-large btn-block btn-primary">Export Json File</button>
                     <p class="help-block">Export json file to your local device.</p>
                 </div>
                 <div class="modal-footer">
@@ -150,6 +149,23 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Start Import</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Modal -->
+    <div class="modal fade" id="modal-About">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">About</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Here is some directions about software.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -333,17 +349,17 @@ function edit() {
     $('#modal-ClassEdit').modal("show");
 }
 
-function restore () {
+function restore() {
     clearSelected();
 }
 
-function clearSelected () {
+function clearSelected() {
     var table = document.getElementById("tableArea");
     for (var i = timeTable.onSelected.length - 1; i >= 0; i--) {
         var target = table.rows[timeTable.onSelected[i].row].cells[timeTable.onSelected[i].cell];
         target.classList.remove("selected");
     };
-    timeTable.onSelected.splice(0,timeTable.onSelected.length);
+    timeTable.onSelected.splice(0, timeTable.onSelected.length);
 }
 </script>
 <style type="text/css" media="screen">

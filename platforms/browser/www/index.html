@@ -38,7 +38,7 @@
         <button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
             <span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
         </button>
-        <button type="button" id="restoreBtn" class="btn btn-default" onclick="restore()">
+        <button type="button" id="restoreBtn" class="btn btn-default" onclick="restoreAlert()">
             <span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
         </button>
         <div>
@@ -201,6 +201,25 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Got it</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Restore Alert -->
+    <div class="modal fade" id="modal-RestoreAlert">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Restore</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to restore you time table?</p>
+                    <p>It will restore this time of modification.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="restore()">Yes</button>
                 </div>
             </div>
         </div>
@@ -395,8 +414,13 @@ function edit() {
     };
 }
 
+function restoreAlert() {
+    $('#modal-RestoreAlert').modal("show");
+}
+
 function restore() {
     clearSelected();
+    $('#modal-RestoreAlert').modal("hide");
 }
 
 function clearSelected() {

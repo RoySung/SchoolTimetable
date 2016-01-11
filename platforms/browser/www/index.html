@@ -229,8 +229,41 @@
 </html>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript">
+document.addEventListener("deviceready", onDeviceReady, false);
 var timeTable = new initTimeTable();
 initElmt();
+function onDeviceReady() {
+    
+    //Object
+    var data = new Object();
+    data.tableName = "News";
+    data.tableType = 0;
+    data.tableField = new Array();
+    for (var i = 0;i < 15 ; i++) {
+        data.tableField[i] = new Array();
+        for (var j = 0 ; j < 7 ; j++) {
+            data.tableField[i][j] = new Object();
+            data.tableField[i][j].class_name = null;
+            data.tableField[i][j].class_room = null;
+            data.tableField[i][j].isRemind = false;
+            data.tableField[i][j].remindTime = "";
+            data.tableField[i][j].cellColor = "#FFFFFF";
+        }
+    }
+    //DataBase
+    var db = window.sqlitePlugin.openDatabase({name: "schoolTimeTable.db"});
+    db.transaction(function(tx) {
+        tx.executeSql("CREATE TABLE NewTable (id int(11) NOT NULL AUTO_INCREMENT,tableName varchar(255) NOT NULL,tableType int NOT NULL,tableField varchar(255) NOT NULL,PRIMARY KEY(id))",[],function(tx,res){
+          alert('Success!');
+        });
+        //  tx.executeSql("select * from NewTable", [], function(tx, res){
+        //     alert(res);
+        //  });
+        // tx.executeSql("INSERT INTO `NewTable` (`tableName`, `tableType`, `tableField`) VALUES (?,?,?)",["new",0,JSON.stringify(timeTable.data)],function(tx, res){
+        //     alert("Insert Success!");
+        // });
+    });
+}
 
 function initTimeTable() {
     this.tableType = "day";

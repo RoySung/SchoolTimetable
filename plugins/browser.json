@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
         }
     },
     "dependent_plugins": {}

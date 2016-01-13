@@ -230,10 +230,10 @@
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript">
 document.addEventListener("deviceready", onDeviceReady, false);
+var db;
 var timeTable = new initTimeTable();
 initElmt();
 function onDeviceReady() {
-    
     //Object
     var data = new Object();
     data.tableName = "News";
@@ -243,25 +243,42 @@ function onDeviceReady() {
         data.tableField[i] = new Array();
         for (var j = 0 ; j < 7 ; j++) {
             data.tableField[i][j] = new Object();
-            data.tableField[i][j].class_name = null;
-            data.tableField[i][j].class_room = null;
+            data.tableField[i][j].course = null;
+            data.tableField[i][j].classRoom = null;
             data.tableField[i][j].isRemind = false;
             data.tableField[i][j].remindTime = "";
             data.tableField[i][j].cellColor = "#FFFFFF";
         }
     }
     //DataBase
-    var db = window.sqlitePlugin.openDatabase({name: "schoolTimeTable.db"});
+    db = window.sqlitePlugin.openDatabase({name: "schoolTimeTable.db"});
     db.transaction(function(tx) {
-        tx.executeSql("CREATE TABLE NewTable (id int(11) NOT NULL AUTO_INCREMENT,tableName varchar(255) NOT NULL,tableType int NOT NULL,tableField varchar(255) NOT NULL,PRIMARY KEY(id))",[],function(tx,res){
-          alert('Success!');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS timeTable (id integer primary key AUTOINCREMENT, tableName TEXT NOT NULL, tableType integer NOT NULL, tableField TEXT NOT NULL)',[],function(tx,res) {
+                tx.executeSql("INSERT INTO timeTable (tableName, tableType, tableField) VALUES (?,?,?)", ["new", 0, JSON.stringify(data.tableField)], function(tx, res) {
+                tx.executeSql("select * from timeTable", [], function(tx, res) {
+                  console.log("Select * from timeTable :");
+                  console.log(res.rows.item(0));
+                });
+            }, function(e) {
+              console.log("ERROR: " + e.message);
+            });
         });
-        //  tx.executeSql("select * from NewTable", [], function(tx, res){
-        //     alert(res);
-        //  });
-        // tx.executeSql("INSERT INTO `NewTable` (`tableName`, `tableType`, `tableField`) VALUES (?,?,?)",["new",0,JSON.stringify(timeTable.data)],function(tx, res){
-        //     alert("Insert Success!");
-        // });
+    });
+    data.tableField[0][0].course = "Test";
+    updateDB(0,data.tableField);
+}
+
+function updateDB(type,array) {
+    db.transaction(function(tx) {
+         tx.executeSql("UPDATE timeTable  SET tableType=?, tableField=?", [type, JSON.stringify(array)], function(tx, res) {
+            console.log("UPDATE timeTable :"+res.rows.item(0));
+            tx.executeSql("select * from timeTable", [], function(tx, res) {
+              console.log("Select * from timeTable :");
+              console.log(res.rows.item(0));
+            });
+         });
+    }, function(e) {
+        console.log("ERROR: " + e.message);
     });
 }
 

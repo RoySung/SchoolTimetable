@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font-Awesome -->
     <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+	<!-- Load style.css -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">	
 </head>
 
 <body>
@@ -228,274 +230,31 @@
 
 </html>
 <script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/setElemen.js"></script>
+<script type="text/javascript" src="js/action.js"></script>
+<script type="text/javascript" src="js/database.js"></script>
+
 <script type="text/javascript">
 document.addEventListener("deviceready", onDeviceReady, false);
+var timeTable;
 var db;
-var timeTable = new initTimeTable();
-initElmt();
+
 function onDeviceReady() {
-    //Object
-    var data = new Object();
-    data.tableName = "News";
-    data.tableType = 0;
-    data.tableField = new Array();
-    for (var i = 0;i < 15 ; i++) {
-        data.tableField[i] = new Array();
-        for (var j = 0 ; j < 7 ; j++) {
-            data.tableField[i][j] = new Object();
-            data.tableField[i][j].course = null;
-            data.tableField[i][j].classRoom = null;
-            data.tableField[i][j].isRemind = false;
-            data.tableField[i][j].remindTime = "";
-            data.tableField[i][j].cellColor = "#FFFFFF";
-        }
-    }
-    //DataBase
-    db = window.sqlitePlugin.openDatabase({name: "schoolTimeTable.db"});
-    db.transaction(function(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS timeTable (id integer primary key AUTOINCREMENT, tableName TEXT NOT NULL, tableType integer NOT NULL, tableField TEXT NOT NULL)',[],function(tx,res) {
-                tx.executeSql("INSERT INTO timeTable (tableName, tableType, tableField) VALUES (?,?,?)", ["new", 0, JSON.stringify(data.tableField)], function(tx, res) {
-                tx.executeSql("select * from timeTable", [], function(tx, res) {
-                  console.log("Select * from timeTable :");
-                  console.log(res.rows.item(0));
-                });
-            }, function(e) {
-              console.log("ERROR: " + e.message);
-            });
-        });
-    });
-    data.tableField[0][0].course = "Test";
-    updateDB(0,data.tableField);
+    timeTable = new timeTable();
+    db = window.sqlitePlugin.openDatabase({
+    	name: "schoolTimeTable.db"
+	});
+    setTimeTable();
+    setTableType();
+    setMode();
+    // loadDB();
+    // setData();
 }
 
-function updateDB(type,array) {
-    db.transaction(function(tx) {
-         tx.executeSql("UPDATE timeTable  SET tableType=?, tableField=?", [type, JSON.stringify(array)], function(tx, res) {
-            console.log("UPDATE timeTable :"+res.rows.item(0));
-            tx.executeSql("select * from timeTable", [], function(tx, res) {
-              console.log("Select * from timeTable :");
-              console.log(res.rows.item(0));
-            });
-         });
-    }, function(e) {
-        console.log("ERROR: " + e.message);
-    });
-}
-
-function initTimeTable() {
-    this.tableType = "day";
+function timeTable() {
     this.mode = "view";
+    this.tableType = "day";
+    this.data = new Object();
     this.onSelected = new Array();
 }
-
-function initElmt() {
-    // define table
-    var tableWeekLenght = 6;
-    var tableClassLenght = 15;
-    var tableHead = document.getElementById("tableHeadArea");
-    var trHead = document.getElementById("trHead");
-    var tableBody = document.getElementById("tableBodyArea");
-    // append table head
-    var txtHead = [{
-        "week": "Mon"
-    }, {
-        "week": "Tue"
-    }, {
-        "week": "Wed"
-    }, {
-        "week": "Thu"
-    }, {
-        "week": "Fri"
-    }, {
-        "week": "Sat"
-    }];
-    for (var i = 0; i < tableWeekLenght; i++) {
-        var th = document.createElement('th');
-        trHead.appendChild(th);
-        trHead.cells[i + 1].appendChild(document.createTextNode(txtHead[i].week));
-    };
-    // append table body
-    for (var i = 0; i <= tableClassLenght - 1; i++) {
-        var tr = document.createElement('tr');
-        // append class cell
-        for (var j = 0; j <= 6; j++) {
-            var td = document.createElement('td');
-            td.className = "classCells";
-            td.addEventListener("click", ClassEvent);
-            tr.appendChild(td);
-        };
-        tableBody.appendChild(tr);
-        tr.cells[0].appendChild(document.createTextNode(i + 1));
-    };
-    setTableType();
-    setMode();
-}
-
-function setTableType() {
-    switch (timeTable.tableType) {
-        case "day":
-            document.getElementById("tableTypeIcon").className = "fa fa-fw fa-sun-o";
-            for (var i = 0; i <= 15; i++) {
-                if (i <= 9) {
-                    document.getElementById("tableArea").rows[i].className = "displayTrue";
-                } else {
-                    document.getElementById("tableArea").rows[i].className = "displayNone";
-                };
-            };
-            break;
-        case "night":
-            document.getElementById("tableTypeIcon").className = "fa fa-fw fa-moon-o";
-            for (var i = 0; i <= 15; i++) {
-                if (i > 9) {
-                    document.getElementById("tableArea").rows[i].className = "displayTrue";
-                } else {
-                    document.getElementById("tableArea").rows[i].className = "displayNone";
-                };
-                document.getElementById("tableArea").rows[0].className = "displayTrue";
-            };
-            break;
-        case "both":
-            for (var i = 0; i <= 15; i++) {
-                document.getElementById("tableArea").rows[i].className = "displayTrue";
-            };
-            document.getElementById("tableTypeIcon").className = "fa fa-fw fa-star-o";
-            break;
-    }
-}
-
-function switchTableType() {
-    switch (timeTable.tableType) {
-        case "day":
-            // switch to night
-            timeTable.tableType = "night";
-            break;
-        case "night":
-            // switch to both
-            timeTable.tableType = "both";
-            break;
-        case "both":
-            // switch to day
-            timeTable.tableType = "day";
-            break;
-    }
-    setTableType();
-}
-
-function setMode() {
-    switch (timeTable.mode) {
-        case "view":
-            document.getElementById("ModeIcon").className = "fa fa-fw fa-eye";
-            document.getElementById("editBtn").classList.add("displayNone");
-            document.getElementById("editBtn").classList.remove("displayTrue");
-            document.getElementById("restoreBtn").classList.add("displayNone");
-            document.getElementById("restoreBtn").classList.remove("displayTrue");
-
-            break;
-        case "edit":
-            document.getElementById("ModeIcon").className = "fa fa-fw fa-pencil";
-            document.getElementById("editBtn").classList.add("displayTrue");
-            document.getElementById("editBtn").classList.remove("displayNone");
-            document.getElementById("restoreBtn").classList.add("displayTrue");
-            document.getElementById("restoreBtn").classList.remove("displayNone");
-            break;
-    }
-}
-
-function switchMode() {
-    switch (timeTable.mode) {
-        case "view":
-            // switch to edit
-            timeTable.mode = "edit";
-            setMode();
-            break;
-        case "edit":
-            // open save alert modal
-            modalController('#modal-SaveAlert',"show");
-            break;
-    }
-}
-
-function saveChange () {
-    // save change and switch to view
-    modalController('#modal-SaveAlert',"hide");
-    clearSelected();
-    timeTable.mode = "view";
-    setMode();
-}
-
-function ClassEvent() {
-    var table = document.getElementById("tableArea");
-    if (this.cellIndex != 0) {
-        switch (timeTable.mode) {
-            case "view":
-                modalController('#modal-ClassInfo',"show");
-                break;
-            case "edit":
-                var target = table.rows[this.parentNode.rowIndex].cells[this.cellIndex];
-                if (target.classList.contains("selected")) {
-                    for (var i = timeTable.onSelected.length - 1; i >= 0; i--) {
-                        if (timeTable.onSelected[i].row == this.parentNode.rowIndex && timeTable.onSelected[i].cell == this.cellIndex) {
-                            var rmIndex = i;
-                        };
-                    };
-                    if (rmIndex > -1) {
-                        timeTable.onSelected.splice(rmIndex, 1);
-                    }
-                    target.classList.remove("selected");
-                } else {
-                    timeTable.onSelected.push({
-                        "row": this.parentNode.rowIndex,
-                        "cell": this.cellIndex
-                    });
-                    target.classList.add("selected");
-                };
-
-                break;
-        }
-    };
-}
-
-function edit() {
-    console.log(timeTable.onSelected);
-    if (timeTable.onSelected.length != 0) {
-        modalController('#modal-ClassEdit',"show");
-    } else{
-        modalController('#modal-SelectAlert',"show");
-    };
-}
-
-function restore() {
-    clearSelected();
-    modalController('#modal-RestoreAlert', "hide");
-}
-
-function clearSelected() {
-    var table = document.getElementById("tableArea");
-    for (var i = timeTable.onSelected.length - 1; i >= 0; i--) {
-        var target = table.rows[timeTable.onSelected[i].row].cells[timeTable.onSelected[i].cell];
-        target.classList.remove("selected");
-    };
-    timeTable.onSelected.splice(0, timeTable.onSelected.length);
-}
-
-function modalController (modalId, method) {
-    $(modalId).modal(method);
-}
 </script>
-<style type="text/css" media="screen">
-#header {
-    margin-bottom: 0px;
-}
-
-#dropdown-menu {
-    margin: 10px;
-}
-
-.displayNone {
-    display: none;
-}
-
-.selected {
-    background-color: #5E9FF2;
-}
-</style>

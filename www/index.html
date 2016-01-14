@@ -2,524 +2,259 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>SchoolTimeTable</title>
-	<!-- JQuery -->
-	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-	<!-- Bootstrap -->
-	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-	<!-- Font-Awesome -->
-	<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <title>SchoolTimeTable</title>
+    <!-- JQuery -->
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+	<!-- Load style.css -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">	
 </head>
 
 <body>
-	<!-- Header Navbar -->
-	<nav id="header" class="navbar navbar-default" role="navigation">
-		<a class="navbar-brand">SchoolTimeTable</a>
-		<div id="dropdown-menu" class="dropdown pull-right">
-			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				<span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
-			</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				<li><a data-toggle="modal" href='#modal-Export'>Export</a></li>
-				<li role="separator" class="divider"></li>
-				<li><a data-toggle="modal" href='#modal-Import'>Import</a></li>
-				<li role="separator" class="divider"></li>
-				<li><a data-toggle="modal" href='#modal-About'>About</a></li>
-			</ul>
-		</div>
-	</nav>
-	<!-- Container -->
-	<div class="container">
-		<button type="button" class="btn btn-default" onclick="switchMode()">
-			<span id="ModeIcon" aria-hidden="true"></span>
-		</button>
-		<button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
-			<span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
-		</button>
-		<button type="button" id="restoreBtn" class="btn btn-default" onclick="modalController('#modal-RestoreAlert','show');">
-			<span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
-		</button>
-		<div>
-			<table id="tableArea" class="table table-bordered">
-				<thead id="tableHeadArea">
-					<tr id="trHead">
-						<th>
-							<button type="button" class="btn btn-default" onclick="switchTableType()">
-								<span id="tableTypeIcon" aria-hidden="true"></span>
-							</button>
-						</th>
-						<!-- create tabel head dynamically -->
-					</tr>
-				</thead>
-				<tbody id="tableBodyArea">
-					<!-- create table body dynamically -->
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<!-- Modal Class Information -->
-	<div class="modal fade" id="modal-ClassInfo">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Class Information</h4>
-				</div>
-				<div class="modal-body">
-					<p>ClassName:</p>
-					<p>ClassRoom:</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal Class Edit -->
-	<div class="modal fade" id="modal-ClassEdit">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Class Edit</h4>
-				</div>
-				<div class="modal-body">
-					<form action="" method="POST" role="form">
-						<div class="form-group">
-							<label for="">Class Name</label>
-							<input type="text" class="form-control" id="class_name">
-						</div>
-						<div class="form-group">
-							<label for="">Class Room</label>
-							<input type="text" class="form-control" id="class_room">
-						</div>
-						<div class="form-group">
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" value="remind"> Checkbox
-								</label>
-							</div>
-							<select id="input" class="form-control">
-								<option value="">-- Select One --</option>
-							</select>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal Export -->
-	<div class="modal fade" id="modal-Export">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Export</h4>
-				</div>
-				<div class="modal-body">
-					<button type="button" class="btn btn-large btn-block btn-primary">Export Json File</button>
-					<p class="help-block">Export json file to your local device.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal Import -->
-	<div class="modal fade" id="modal-Import">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Import</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<input type="file" id="ImportFile">
-						<p class="help-block">Select json file to import.</p>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Start Import</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- About Modal -->
-	<div class="modal fade" id="modal-About">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">About</h4>
-				</div>
-				<div class="modal-body">
-					<p>Here is some directions about software.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Switch Save Alert -->
-	<div class="modal fade" id="modal-SaveAlert">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Save Alert</h4>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure to leave and save your change?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary" onclick="saveChange()">Save Changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Edit Select Alert -->
-	<div class="modal fade" id="modal-SelectAlert">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Select </h4>
-				</div>
-				<div class="modal-body">
-					<p>Please select class time to edit.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Got it</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Restore Alert -->
-	<div class="modal fade" id="modal-RestoreAlert">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Restore</h4>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure to restore you time table?</p>
-					<p>It will restore this time of modification.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary" onclick="restore()">Yes</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- Header Navbar -->
+    <nav id="header" class="navbar navbar-default" role="navigation">
+        <a class="navbar-brand">SchoolTimeTable</a>
+        <div id="dropdown-menu" class="dropdown pull-right">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a data-toggle="modal" href='#modal-Export'>Export</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a data-toggle="modal" href='#modal-Import'>Import</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a data-toggle="modal" href='#modal-About'>About</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Container -->
+    <div class="container">
+        <button type="button" class="btn btn-default" onclick="switchMode()">
+            <span id="ModeIcon" aria-hidden="true"></span>
+        </button>
+        <button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
+            <span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
+        </button>
+        <button type="button" id="restoreBtn" class="btn btn-default" onclick="modalController('#modal-RestoreAlert','show');">
+            <span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
+        </button>
+        <div>
+            <table id="tableArea" class="table table-bordered">
+                <thead id="tableHeadArea">
+                    <tr id="trHead">
+                        <th>
+                            <button type="button" class="btn btn-default" onclick="switchTableType()">
+                                <span id="tableTypeIcon" aria-hidden="true"></span>
+                            </button>
+                        </th>
+                        <!-- create tabel head dynamically -->
+                    </tr>
+                </thead>
+                <tbody id="tableBodyArea">
+                    <!-- create table body dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Modal Class Information -->
+    <div class="modal fade" id="modal-ClassInfo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Class Information</h4>
+                </div>
+                <div class="modal-body">
+                    <p>ClassName:</p>
+                    <p>ClassRoom:</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Class Edit -->
+    <div class="modal fade" id="modal-ClassEdit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Class Edit</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" role="form">
+                        <div class="form-group">
+                            <label for="">Class Name</label>
+                            <input type="text" class="form-control" id="class_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Class Room</label>
+                            <input type="text" class="form-control" id="class_room">
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="remind"> Checkbox
+                                </label>
+                            </div>
+                            <select id="input" class="form-control">
+                                <option value="">-- Select One --</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Export -->
+    <div class="modal fade" id="modal-Export">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Export</h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-large btn-block btn-primary">Export Json File</button>
+                    <p class="help-block">Export json file to your local device.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Import -->
+    <div class="modal fade" id="modal-Import">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Import</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="file" id="ImportFile">
+                        <p class="help-block">Select json file to import.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Start Import</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Modal -->
+    <div class="modal fade" id="modal-About">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">About</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Here is some directions about software.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Switch Save Alert -->
+    <div class="modal fade" id="modal-SaveAlert">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Save Alert</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to leave and save your change?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChange()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Select Alert -->
+    <div class="modal fade" id="modal-SelectAlert">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Select </h4>
+                </div>
+                <div class="modal-body">
+                    <p>Please select class time to edit.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Got it</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Restore Alert -->
+    <div class="modal fade" id="modal-RestoreAlert">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Restore</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to restore you time table?</p>
+                    <p>It will restore this time of modification.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="restore()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
 <script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/setElemen.js"></script>
+<script type="text/javascript" src="js/action.js"></script>
+<script type="text/javascript" src="js/database.js"></script>
+
 <script type="text/javascript">
 document.addEventListener("deviceready", onDeviceReady, false);
-var db;
 var timeTable;
+var db;
+
 function onDeviceReady() {
-	db = window.sqlitePlugin.openDatabase({name: "schoolTimeTable.db"});
-	timeTable = new initTimeTable();
-	initElmt();
-	console.log(timeTable.data);
-	
-}
-
-function loadData() {
-	var tableClassLenght = 15;
-	var tableWeekLenght = 7;
-	var table = document.getElementById("tableArea");
-	for (var i=0 ; i<tableClassLenght ; i++) {
-		for(var j=0 ; j<tableWeekLenght ; j++) {
-			table.rows[i+1].cells[j+i].appendChild(document.createTextNode(timeTable.data.tableField[i][j].course));
-		}
-	}
-}
-
-function updateDB(type,array) {
-	db.transaction(function(tx) {
-		 tx.executeSql("UPDATE timeTable  SET tableType=?, tableField=?", [type, JSON.stringify(array)], function(tx, res) {
-			console.log("UPDATE timeTable :");
-			tx.executeSql("select * from timeTable", [], function(tx, res) {
-			  console.log("Select * from timeTable :");
-			  console.log(res.rows.item(0));
-			});
-		 });
-	}, function(e) {
-		console.log("ERROR: " + e.message);
+    timeTable = new timeTable();
+    db = window.sqlitePlugin.openDatabase({
+    	name: "schoolTimeTable.db"
 	});
+    setTimeTable();
+    setTableType();
+    setMode();
+    // loadDB();
+    // setData();
 }
 
-function initTimeTable() {
-	this.mode = "view";
-	this.onSelected = new Array();
-	//DataBase
-	db = window.sqlitePlugin.openDatabase({name: "schoolTimeTable.db"});
-	db.transaction(function(tx) {
-		tx.executeSql('CREATE TABLE IF NOT EXISTS timeTable (id integer primary key AUTOINCREMENT, tableName TEXT NOT NULL, tableType integer NOT NULL, tableField TEXT NOT NULL)',[],function(tx,res) {
-				tx.executeSql('SELECT COUNT(*) FROM timeTable', [], function(res) {
-					if (res.rows.item(0) == 0) {
-						//Create new
-						this.data = new Object();
-						this.data.tableName = "News";
-						this.data.tableType = "day";
-						this.data.tableField = new Array();
-						for (var i = 0;i < 15 ; i++) {
-							this.data.tableField[i] = new Array();
-							for (var j = 0 ; j < 7 ; j++) {
-								this.data.tableField[i][j] = new Object();
-								this.data.tableField[i][j].course = null;
-								this.data.tableField[i][j].classRoom = null;
-								this.data.tableField[i][j].isRemind = false;
-								this.data.tableField[i][j].remindTime = "";
-								this.data.tableField[i][j].cellColor = "#FFFFFF";
-							}
-						}
-						tx.executeSql("INSERT INTO timeTable (tableName, tableType, tableField) VALUES (?,?,?)", ["new", 0, JSON.stringify(this.data.tableField)], function(tx, res) {
-							tx.executeSql("select * from timeTable", [], function(tx, res) {
-							  console.log("Select * from timeTable :");
-							  console.log(res.rows.item(0));
-							});
-						}, function(e) {
-						 	console.log("ERROR: " + e.message);
-						});
-					} else {
-						//Read
-						tx.executeSql("select * from timeTable ", [], function(tx, res) {
-							console.log("Select * from timeTable :");
-							console.log(res.rows.item(0));
-							this.data = JSON.parse(res.rows.item(0).tableField);
-						});
-						
-					}
-				});
-		});
-	});
-}
-
-function initElmt() {
-	// define table
-	var tableWeekLenght = 6;
-	var tableClassLenght = 15;
-	var tableHead = document.getElementById("tableHeadArea");
-	var trHead = document.getElementById("trHead");
-	var tableBody = document.getElementById("tableBodyArea");
-	// append table head
-	var txtHead = [{
-		"week": "Mon"
-	}, {
-		"week": "Tue"
-	}, {
-		"week": "Wed"
-	}, {
-		"week": "Thu"
-	}, {
-		"week": "Fri"
-	}, {
-		"week": "Sat"
-	}];
-	for (var i = 0; i < tableWeekLenght; i++) {
-		var th = document.createElement('th');
-		trHead.appendChild(th);
-		trHead.cells[i + 1].appendChild(document.createTextNode(txtHead[i].week));
-	};
-	// append table body
-	for (var i = 0; i <= tableClassLenght - 1; i++) {
-		var tr = document.createElement('tr');
-		// append class cell
-		for (var j = 0; j <= 6; j++) {
-			var td = document.createElement('td');
-			td.className = "classCells";
-			td.addEventListener("click", ClassEvent);
-			tr.appendChild(td);
-		};
-		tableBody.appendChild(tr);
-		tr.cells[0].appendChild(document.createTextNode(i + 1));
-	};
-	setTableType();
-	setMode();
-}
-
-function setTableType() {
-	switch (timeTable.data.tableType) {
-		case "day":
-			document.getElementById("tableTypeIcon").className = "fa fa-fw fa-sun-o";
-			for (var i = 0; i <= 15; i++) {
-				if (i <= 9) {
-					document.getElementById("tableArea").rows[i].className = "displayTrue";
-				} else {
-					document.getElementById("tableArea").rows[i].className = "displayNone";
-				};
-			};
-			break;
-		case "night":
-			document.getElementById("tableTypeIcon").className = "fa fa-fw fa-moon-o";
-			for (var i = 0; i <= 15; i++) {
-				if (i > 9) {
-					document.getElementById("tableArea").rows[i].className = "displayTrue";
-				} else {
-					document.getElementById("tableArea").rows[i].className = "displayNone";
-				};
-				document.getElementById("tableArea").rows[0].className = "displayTrue";
-			};
-			break;
-		case "both":
-			for (var i = 0; i <= 15; i++) {
-				document.getElementById("tableArea").rows[i].className = "displayTrue";
-			};
-			document.getElementById("tableTypeIcon").className = "fa fa-fw fa-star-o";
-			break;
-	}
-}
-
-function switchTableType() {
-	switch (timeTable.data.tableType) {
-		case "day":
-			// switch to night
-			timeTable.data.tableType = "night";
-			break;
-		case "night":
-			// switch to both
-			timeTable.data.tableType = "both";
-			break;
-		case "both":
-			// switch to day
-			timeTable.data.tableType = "day";
-			break;
-	}
-	setTableType();
-}
-
-function setMode() {
-	switch (timeTable.mode) {
-		case "view":
-			document.getElementById("ModeIcon").className = "fa fa-fw fa-eye";
-			document.getElementById("editBtn").classList.add("displayNone");
-			document.getElementById("editBtn").classList.remove("displayTrue");
-			document.getElementById("restoreBtn").classList.add("displayNone");
-			document.getElementById("restoreBtn").classList.remove("displayTrue");
-
-			break;
-		case "edit":
-			document.getElementById("ModeIcon").className = "fa fa-fw fa-pencil";
-			document.getElementById("editBtn").classList.add("displayTrue");
-			document.getElementById("editBtn").classList.remove("displayNone");
-			document.getElementById("restoreBtn").classList.add("displayTrue");
-			document.getElementById("restoreBtn").classList.remove("displayNone");
-			break;
-	}
-}
-
-function switchMode() {
-	switch (timeTable.mode) {
-		case "view":
-			// switch to edit
-			timeTable.mode = "edit";
-			setMode();
-			break;
-		case "edit":
-			// open save alert modal
-			modalController('#modal-SaveAlert',"show");
-			break;
-	}
-}
-
-function saveChange () {
-	// save change and switch to view
-	modalController('#modal-SaveAlert',"hide");
-	clearSelected();
-	timeTable.mode = "view";
-	setMode();
-}
-
-function ClassEvent() {
-	var table = document.getElementById("tableArea");
-	if (this.cellIndex != 0) {
-		switch (timeTable.mode) {
-			case "view":
-				modalController('#modal-ClassInfo',"show");
-				break;
-			case "edit":
-				var target = table.rows[this.parentNode.rowIndex].cells[this.cellIndex];
-				if (target.classList.contains("selected")) {
-					for (var i = timeTable.onSelected.length - 1; i >= 0; i--) {
-						if (timeTable.onSelected[i].row == this.parentNode.rowIndex && timeTable.onSelected[i].cell == this.cellIndex) {
-							var rmIndex = i;
-						};
-					};
-					if (rmIndex > -1) {
-						timeTable.onSelected.splice(rmIndex, 1);
-					}
-					target.classList.remove("selected");
-				} else {
-					timeTable.onSelected.push({
-						"row": this.parentNode.rowIndex,
-						"cell": this.cellIndex
-					});
-					target.classList.add("selected");
-				};
-
-				break;
-		}
-	};
-}
-
-function edit() {
-	console.log(timeTable.onSelected);
-	if (timeTable.onSelected.length != 0) {
-		modalController('#modal-ClassEdit',"show");
-	} else{
-		modalController('#modal-SelectAlert',"show");
-	};
-}
-
-function restore() {
-	clearSelected();
-	modalController('#modal-RestoreAlert', "hide");
-}
-
-function clearSelected() {
-	var table = document.getElementById("tableArea");
-	for (var i = timeTable.onSelected.length - 1; i >= 0; i--) {
-		var target = table.rows[timeTable.onSelected[i].row].cells[timeTable.onSelected[i].cell];
-		target.classList.remove("selected");
-	};
-	timeTable.onSelected.splice(0, timeTable.onSelected.length);
-}
-
-function modalController (modalId, method) {
-	$(modalId).modal(method);
+function timeTable() {
+    this.mode = "view";
+    this.tableType = "day";
+    this.data = new Object();
+    this.onSelected = new Array();
 }
 </script>
-<style type="text/css" media="screen">
-#header {
-	margin-bottom: 0px;
-}
-
-#dropdown-menu {
-	margin: 10px;
-}
-
-.displayNone {
-	display: none;
-}
-
-.selected {
-	background-color: #5E9FF2;
-}
-</style>

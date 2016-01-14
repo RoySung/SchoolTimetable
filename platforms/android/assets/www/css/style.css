@@ -1,0 +1,17 @@
+<style type="text/css" media="screen">
+#header {
+	margin-bottom: 0px;
+}
+
+#dropdown-menu {
+	margin: 10px;
+}
+
+.displayNone {
+	display: none;
+}
+
+.selected {
+	background-color: #5E9FF2;
+}
+</style>

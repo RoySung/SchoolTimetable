@@ -2,11 +2,11 @@ function loadDB() {
     db.transaction(function(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS timeTable (id integer primary key AUTOINCREMENT, tableName TEXT NOT NULL, tableType TEXT NOT NULL, tableField TEXT NOT NULL)', [], function(tx, res) {
             console.log("create new db table");
-            tx.executeSql('SELECT COUNT(*) FROM timeTable', [], function(res) {
+            tx.executeSql('SELECT COUNT(*) AS cnt FROM timeTable', [], function(tx, res) {
                 console.log("enter select query");
-                console.log(res);
+                console.log(res.rows.item(0).cnt);
 
-                if (!res.rows) {
+                if (res.rows.item(0).cnt == 0) {
                     //create new data 
                     console.log("create new db data");
                     timeTable.data.tableName = "News";

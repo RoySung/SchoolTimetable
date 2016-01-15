@@ -46,8 +46,8 @@ function initTableField() {
         timeTable.data.tableField[i] = new Array();
         for (var j = 0; j < 7; j++) {
             timeTable.data.tableField[i][j] = new Object();
-            timeTable.data.tableField[i][j].course = null;
-            timeTable.data.tableField[i][j].classRoom = null;
+            timeTable.data.tableField[i][j].course = 'TestCourse';
+            timeTable.data.tableField[i][j].classRoom = 'TestRoom';
             timeTable.data.tableField[i][j].isRemind = false;
             timeTable.data.tableField[i][j].remindTime = "";
             timeTable.data.tableField[i][j].cellColor = "#FFFFFF";

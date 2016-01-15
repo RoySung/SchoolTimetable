@@ -19,6 +19,7 @@ function loadDB() {
                         	timeTable.data.tableType = res.rows.item(0).tableType;
                         	timeTable.data.tableField = JSON.parse(res.rows.item(0).tableField);
                         	console.log(timeTable.data);
+                            setData();
                         });
                     }, function(e) {
                         console.log("ERROR: " + e.message);
@@ -32,6 +33,7 @@ function loadDB() {
                         timeTable.data.tableType = res.rows.item(0).tableType;
                         timeTable.data.tableField = JSON.parse(res.rows.item(0).tableField);
                         console.log(timeTable.data);
+                        setData();
                     });
                 }
             });

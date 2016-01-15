@@ -101,7 +101,7 @@ function setData() {
     var table = document.getElementById("tableArea");
     for (var i = 0; i < tableClassLenght; i++) {
         for (var j = 0; j < tableWeekLenght; j++) {
-            table.rows[i + 1].cells[j + i].appendChild(document.createTextNode(timeTable.data.tableField[i][j].course));
+            table.rows[i + 1].cells[j+1].appendChild(document.createTextNode(timeTable.data.tableField[i][j].course));
         }
     }
 }

@@ -1,26 +1,38 @@
 function loadDB() {
     db.transaction(function(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS timeTable (id integer primary key AUTOINCREMENT, tableName TEXT NOT NULL, tableType integer NOT NULL, tableField TEXT NOT NULL)', [], function(tx, res) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS timeTable (id integer primary key AUTOINCREMENT, tableName TEXT NOT NULL, tableType TEXT NOT NULL, tableField TEXT NOT NULL)', [], function(tx, res) {
+            console.log("create new db table");
             tx.executeSql('SELECT COUNT(*) FROM timeTable', [], function(res) {
-                if (res.rows.item(0) == 0) {
+                console.log("enter select query");
+                console.log(res);
+
+                if (!res.rows) {
                     //create new data 
+                    console.log("create new db data");
                     timeTable.data.tableName = "News";
                     timeTable.data.tableType = "day";
                     initTableField();
-                    tx.executeSql("INSERT INTO timeTable (tableName, tableType, tableField) VALUES (?,?,?)", ["new", 0, JSON.stringify(this.data.tableField)], function(tx, res) {
+                    tx.executeSql("INSERT INTO timeTable (tableName, tableType, tableField) VALUES (?,?,?)", [timeTable.data.tableName, timeTable.data.tableType, JSON.stringify(timeTable.data.tableField)], function(tx, res) {
                         tx.executeSql("select * from timeTable", [], function(tx, res) {
                             console.log("Select * from timeTable :" + res.rows.item(0));
+                        	timeTable.data.tableName = res.rows.item(0).tableName;
+                        	timeTable.data.tableType = res.rows.item(0).tableType;
+                        	timeTable.data.tableField = JSON.parse(res.rows.item(0).tableField);
+                        	console.log(timeTable.data);
                         });
                     }, function(e) {
                         console.log("ERROR: " + e.message);
                     });
                 } else {
                     //read data
+                    console.log("read data");
                     tx.executeSql("select * from timeTable ", [], function(tx, res) {
                         console.log("Select * from timeTable :" + res.rows.item(0));
-                        timeTable.data = JSON.parse(res.rows.item(0).tableField);
+                        timeTable.data.tableName = res.rows.item(0).tableName;
+                        timeTable.data.tableType = res.rows.item(0).tableType;
+                        timeTable.data.tableField = JSON.parse(res.rows.item(0).tableField);
+                        console.log(timeTable.data);
                     });
-
                 }
             });
         });

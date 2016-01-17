@@ -79,6 +79,9 @@ function ClassEvent() {
     var table = document.getElementById("tableArea");
     switch (timeTable.mode) {
         case "view":
+            console.log(timeTable.data.tableField[this.parentNode.rowIndex][this.cellIndex]);
+            document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex][this.cellIndex].course;
+            document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex][this.cellIndex].classRoom;
             modalController('#modal-ClassInfo', "show");
             break;
         case "edit":

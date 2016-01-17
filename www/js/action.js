@@ -95,10 +95,6 @@ function modalController(modalId, method) {
 }
 
 function exportCSV() {
-    timeTable = new timeTable();
-    timeTable.data.tableName = "News";
-    timeTable.data.tableType = "day";
-    initTableField();
     var exportArray = new Array();
     for (var i = 0; i < 15; i++) {
         for (var j = 0; j < 7; j++) {

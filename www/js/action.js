@@ -30,6 +30,20 @@ function switchTableType() {
     setTableType();
 }
 
+function switchWeekType() {
+    switch (timeTable.weekType) {
+        case "normal":
+            // switch to weekend
+            timeTable.weekType = "weekend";
+            break;
+        case "weekend":
+            // switch to normal
+            timeTable.weekType = "normal";
+            break;
+    }
+    setWeekType();
+}
+
 function saveChange() {
     // save change and switch to view
     modalController('#modal-SaveAlert', "hide");

@@ -36,7 +36,9 @@
     <div class="container">
         <button type="button" class="btn btn-default" onclick="switchTableType()">
             <span id="tableTypeIcon" aria-hidden="true"></span>
-            Switch Table
+        </button>
+        <button type="button" class="btn btn-default" onclick="switchWeekType()">
+            <span id="weekTypeIcon" aria-hidden="true"></span>
         </button>
         <div class="pull-right">
             <button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
@@ -250,6 +252,7 @@ function onDeviceReady() {
         name: "schoolTimeTable.db"
     });
     setTimeTable();
+    setWeekType();
     setTableType();
     setMode();
     loadDB();
@@ -258,6 +261,7 @@ function onDeviceReady() {
 function timeTable() {
     this.mode = "view";
     this.tableType = "day";
+    this.weekType = "normal";
     this.data = new Object();
     this.onSelected = new Array();
 }

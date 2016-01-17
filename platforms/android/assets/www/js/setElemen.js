@@ -32,9 +32,9 @@ function setTimeTable() {
         // append class cell
         for (var j = 0; j <= tableWeekLenght; j++) {
             var td = document.createElement('td');
-            if (j!=0) {
-            	td.className = "classCells";
-            	td.addEventListener("click", ClassEvent);	
+            if (j != 0) {
+                td.className = "classCells";
+                td.addEventListener("click", ClassEvent);
             };
             tr.appendChild(td);
         };
@@ -75,6 +75,35 @@ function setTableType() {
     }
 }
 
+function setWeekType() {
+    switch (timeTable.weekType) {
+        case "normal":
+            document.getElementById("weekTypeIcon").className = "fa fa-fw fa-circle";
+            for (var i = 0; i <= 15; i++) {
+                for (var j = 0; j <= 7; j++) {
+                    if (j <= 5) {
+                        document.getElementById("tableArea").rows[i].cells[j].className = "displayTrue";
+                    } else {
+                        document.getElementById("tableArea").rows[i].cells[j].className = "displayNone";
+                    };
+                };
+            };
+            break;
+        case "weekend":
+            document.getElementById("weekTypeIcon").className = "fa fa-fw fa-circle-o";
+            for (var i = 0; i <= 15; i++) {
+                for (var j = 0; j <= 7; j++) {
+                    if (j <= 5 && j != 0) {
+                        document.getElementById("tableArea").rows[i].cells[j].className = "displayNone";
+                    } else {
+                        document.getElementById("tableArea").rows[i].cells[j].className = "displayTrue";
+                    };
+                };
+            };
+            break;
+    }
+}
+
 function setMode() {
     switch (timeTable.mode) {
         case "view":
@@ -102,7 +131,7 @@ function setData() {
     console.log(timeTable.data.tableField);
     for (var i = 0; i < tableClassLenght; i++) {
         for (var j = 0; j < tableWeekLenght; j++) {
-            table.rows[i + 1].cells[j+1].appendChild(document.createTextNode(timeTable.data.tableField[i][j].course));
+            table.rows[i + 1].cells[j + 1].appendChild(document.createTextNode(timeTable.data.tableField[i][j].course));
             // table.rows[i + 1].cells[j + 1].appendChild(document.createTextNode('test'));
         }
     }

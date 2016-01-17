@@ -41,7 +41,7 @@ function loadDB() {
     });
 }
 
-function updateDB(type, array) {
+function updateDB(field, value) {
     db.transaction(function(tx) {
         tx.executeSql("UPDATE timeTable  SET tableType=?, tableField=?", [type, JSON.stringify(array)], function(tx, res) {
             console.log("UPDATE timeTable :");
@@ -52,6 +52,19 @@ function updateDB(type, array) {
     }, function(e) {
         console.log("ERROR: " + e.message);
     });
+    switch (field) {
+        case "tableName":
+            //update tableName
+            break;
+        case "tableType":
+            //update tableType
+            break;
+        case "tableField":
+            //update tableField
+        case "all":
+            //Update all
+            break;
+    }
 }
 
 function initTableField() {

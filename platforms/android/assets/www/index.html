@@ -11,8 +11,8 @@
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font-Awesome -->
     <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
-	<!-- Load style.css -->
-	<link rel="stylesheet" type="text/css" href="css/style.css">	
+    <!-- Load style.css -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
@@ -34,23 +34,29 @@
     </nav>
     <!-- Container -->
     <div class="container">
-        <button type="button" class="btn btn-default" onclick="switchMode()">
-            <span id="ModeIcon" aria-hidden="true"></span>
+        <button type="button" class="btn btn-default" onclick="switchTableType()">
+            <span id="tableTypeIcon" aria-hidden="true"></span>
+            Switch Table
         </button>
-        <button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
-            <span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
-        </button>
-        <button type="button" id="restoreBtn" class="btn btn-default" onclick="modalController('#modal-RestoreAlert','show');">
-            <span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
-        </button>
+        <div class="pull-right">
+            <button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
+                <span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" id="restoreBtn" class="btn btn-default" onclick="modalController('#modal-RestoreAlert','show');">
+                <span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
+                Restore
+            </button>
+            <button type="button" class="btn btn-default" onclick="switchMode()">
+                <span id="ModeIcon" aria-hidden="true"></span>
+                Switch Mode
+            </button>
+        </div>
         <div>
             <table id="tableArea" class="table table-bordered">
                 <thead id="tableHeadArea">
                     <tr id="trHead">
                         <th>
-                            <button type="button" class="btn btn-default" onclick="switchTableType()">
-                                <span id="tableTypeIcon" aria-hidden="true"></span>
-                            </button>
                         </th>
                         <!-- create tabel head dynamically -->
                     </tr>
@@ -233,7 +239,6 @@
 <script type="text/javascript" src="js/setElemen.js"></script>
 <script type="text/javascript" src="js/action.js"></script>
 <script type="text/javascript" src="js/database.js"></script>
-
 <script type="text/javascript">
 document.addEventListener("deviceready", onDeviceReady, false);
 var timeTable;
@@ -242,8 +247,8 @@ var db;
 function onDeviceReady() {
     timeTable = new timeTable();
     db = window.sqlitePlugin.openDatabase({
-    	name: "schoolTimeTable.db"
-	});
+        name: "schoolTimeTable.db"
+    });
     setTimeTable();
     setTableType();
     setMode();

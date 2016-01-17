@@ -118,3 +118,32 @@ function exportCSV() {
 
     JSONToCSVConvertor(exportArray, timeTable.data.tableName, true);
 }
+
+function importCSV() {
+    var file = $('#ImportFile')[0].files[0];
+    if(file == null) {
+        alert("Please Select File.");
+        return;
+    }
+    if (file.type.match(/text\/csv/) || file.type.match(/vnd\.ms-excel/)) {
+        oFReader = new FileReader();
+        oFReader.onloadend = function() {
+            var json = csvJSON(this.result);
+            var inputData = JSON.parse(json);
+            timeTable.data.tableName = inputData[inputData.length - 1].period;
+            timeTable.data.tableType = inputData[inputData.length - 1].day;
+            for (var i = 0; i < inputData.length - 1; i++) {
+                period = inputData[i].period - 1;
+                day = inputData[i].day - 1;
+                timeTable.data.tableField[period][day].course = inputData[i].course;
+                timeTable.data.tableField[period][day].classRoom = inputData[i].classRoom;
+                timeTable.data.tableField[period][day].isRemind = inputData[i].isRemind;
+                timeTable.data.tableField[period][day].remindTime = inputData[i].remindTime;
+                timeTable.data.tableField[period][day].cellColor = inputData[i].cellColor;
+            }
+        };
+        oFReader.readAsText(file);
+    } else {
+        console.log("This file does not seem to be a CSV.");
+    }
+}

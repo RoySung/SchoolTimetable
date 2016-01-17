@@ -93,3 +93,28 @@ function ClassEvent() {
 function modalController(modalId, method) {
     $(modalId).modal(method);
 }
+
+function exportCSV() {
+    timeTable = new timeTable();
+    timeTable.data.tableName = "News";
+    timeTable.data.tableType = "day";
+    initTableField();
+    var exportArray = new Array();
+    for (var i = 0; i < 15; i++) {
+        for (var j = 0; j < 7; j++) {
+            exportArray[i * 7 + j] = new Object();
+            exportArray[i * 7 + j].period = i + 1;
+            exportArray[i * 7 + j].day = j + 1;
+            exportArray[i * 7 + j].course = timeTable.data.tableField[i][j].course;
+            exportArray[i * 7 + j].classRoom = timeTable.data.tableField[i][j].classRoom;
+            exportArray[i * 7 + j].isRemind = timeTable.data.tableField[i][j].isRemind;
+            exportArray[i * 7 + j].remindTime = timeTable.data.tableField[i][j].remindTime;
+            exportArray[i * 7 + j].cellColor = timeTable.data.tableField[i][j].cellColor;
+        }
+    }
+    exportArray[105] = new Object();
+    exportArray[105].tableName = "news";
+    exportArray[105].tableType = "day";
+
+    JSONToCSVConvertor(exportArray, timeTable.data.tableName, true);
+}

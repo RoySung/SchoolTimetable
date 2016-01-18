@@ -137,8 +137,8 @@ function setData() {
     console.log(timeTable.data.tableField);
     for (var i = 0; i < tableClassLenght; i++) {
         for (var j = 0; j < tableWeekLenght; j++) {
-            table.rows[i + 1].cells[j + 1].appendChild(document.createTextNode(timeTable.data.tableField[i][j].course));
-            // table.rows[i + 1].cells[j + 1].appendChild(document.createTextNode('test'));
+            // table.rows[i + 1].cells[j + 1].appendChild(document.createTextNode(timeTable.data.tableField[i][j].course));
+            table.rows[i+1].cells[j+1].innerHTML = timeTable.data.tableField[i][j].course;
         }
     }
 }

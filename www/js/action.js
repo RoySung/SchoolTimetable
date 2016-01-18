@@ -61,6 +61,18 @@ function edit() {
     };
 }
 
+function save() {
+    for (var i = 0; i < timeTable.onSelected.length; i++) {
+        console.log(timeTable.onSelected[i]);
+        var course = document.getElementById("input_class_name").value;
+        var classRoom = document.getElementById("input_class_room").value;
+        timeTable.data.tableField[timeTable.onSelected[i].row-1][timeTable.onSelected[i].cell-1].course = course;
+        timeTable.data.tableField[timeTable.onSelected[i].row-1][timeTable.onSelected[i].cell-1].classRoom = classRoom;
+    };
+    modalController('#modal-ClassEdit', "hide");
+    setData();
+}
+
 function restore() {
     clearSelected();
     modalController('#modal-RestoreAlert', "hide");
@@ -79,9 +91,9 @@ function ClassEvent() {
     var table = document.getElementById("tableArea");
     switch (timeTable.mode) {
         case "view":
-            console.log(timeTable.data.tableField[this.parentNode.rowIndex][this.cellIndex-1]);
-            document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex][this.cellIndex-1].course;
-            document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex][this.cellIndex-1].classRoom;
+            console.log(timeTable.data.tableField[this.parentNode.rowIndex-1][this.cellIndex-1]);
+            document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex-1][this.cellIndex-1].course;
+            document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex-1][this.cellIndex-1].classRoom;
             modalController('#modal-ClassInfo', "show");
             break;
         case "edit":

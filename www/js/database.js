@@ -44,7 +44,7 @@ function loadDB() {
 function updateDB(id, field, value) {
     if (field == "all") {
         db.transaction(function(tx) {
-            tx.executeSql("UPDATE timeTable  SET tableName=?, tableType=?, tableField=? where id=?", [field.tableName, field.tableType, field.tableField, id], function(tx, res) {
+            tx.executeSql("UPDATE timeTable  SET tableName=?, tableType=?, tableField=? where id=?", [value.tableName, value.tableType, value.tableField, id], function(tx, res) {
                 console.log("UPDATE timeTable :");
                 tx.executeSql("select * from timeTable", [], function(tx, res) {
                     console.log("Select * from timeTable :" + res.rows.item(0));

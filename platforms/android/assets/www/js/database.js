@@ -15,10 +15,10 @@ function loadDB() {
                     tx.executeSql("INSERT INTO timeTable (tableName, tableType, tableField) VALUES (?,?,?)", [timeTable.data.tableName, timeTable.data.tableType, JSON.stringify(timeTable.data.tableField)], function(tx, res) {
                         tx.executeSql("select * from timeTable", [], function(tx, res) {
                             console.log("Select * from timeTable :" + res.rows.item(0));
-                        	timeTable.data.tableName = res.rows.item(0).tableName;
-                        	timeTable.data.tableType = res.rows.item(0).tableType;
-                        	timeTable.data.tableField = JSON.parse(res.rows.item(0).tableField);
-                        	console.log(timeTable.data);
+                            timeTable.data.tableName = res.rows.item(0).tableName;
+                            timeTable.data.tableType = res.rows.item(0).tableType;
+                            timeTable.data.tableField = JSON.parse(res.rows.item(0).tableField);
+                            console.log(timeTable.data);
                             setData();
                         });
                     }, function(e) {
@@ -41,29 +41,29 @@ function loadDB() {
     });
 }
 
-function updateDB(field, value) {
-    db.transaction(function(tx) {
-        tx.executeSql("UPDATE timeTable  SET tableType=?, tableField=?", [type, JSON.stringify(array)], function(tx, res) {
-            console.log("UPDATE timeTable :");
-            tx.executeSql("select * from timeTable", [], function(tx, res) {
-                console.log("Select * from timeTable :" + res.rows.item(0));
+function updateDB(id, field, value) {
+    if (field == "all") {
+        db.transaction(function(tx) {
+            tx.executeSql("UPDATE timeTable  SET tableName=?, tableType=?, tableField=? where id=?", [value.tableName, value.tableType, value.tableField, id], function(tx, res) {
+                console.log("UPDATE timeTable :");
+                tx.executeSql("select * from timeTable", [], function(tx, res) {
+                    console.log("Select * from timeTable :" + res.rows.item(0));
+                });
             });
+        }, function(e) {
+            console.log("ERROR: " + e.message);
         });
-    }, function(e) {
-        console.log("ERROR: " + e.message);
-    });
-    switch (field) {
-        case "tableName":
-            //update tableName
-            break;
-        case "tableType":
-            //update tableType
-            break;
-        case "tableField":
-            //update tableField
-        case "all":
-            //Update all
-            break;
+    } else {
+        db.transaction(function(tx) {
+            tx.executeSql("UPDATE timeTable  SET ?=? where id=?", [field, value, id], function(tx, res) {
+                console.log("UPDATE timeTable :");
+                tx.executeSql("select * from timeTable", [], function(tx, res) {
+                    console.log("Select * from timeTable :" + res.rows.item(0));
+                });
+            });
+        }, function(e) {
+            console.log("ERROR: " + e.message);
+        });
     }
 }
 

@@ -35,6 +35,8 @@ function setTimeTable() {
             if (j != 0) {
                 td.className = "classCells";
                 td.addEventListener("click", ClassEvent);
+            }else{
+                td.className = "timeCells";
             };
             tr.appendChild(td);
         };
@@ -82,9 +84,11 @@ function setWeekType() {
             for (var i = 0; i <= 15; i++) {
                 for (var j = 0; j <= 7; j++) {
                     if (j <= 5) {
-                        document.getElementById("tableArea").rows[i].cells[j].className = "displayTrue";
+                        document.getElementById("tableArea").rows[i].cells[j].classList.remove("displayNone");
+                        document.getElementById("tableArea").rows[i].cells[j].classList.add("displayTrue");
                     } else {
-                        document.getElementById("tableArea").rows[i].cells[j].className = "displayNone";
+                        document.getElementById("tableArea").rows[i].cells[j].classList.remove("displayTrue");
+                        document.getElementById("tableArea").rows[i].cells[j].classList.add("displayNone");
                     };
                 };
             };
@@ -94,9 +98,11 @@ function setWeekType() {
             for (var i = 0; i <= 15; i++) {
                 for (var j = 0; j <= 7; j++) {
                     if (j <= 5 && j != 0) {
-                        document.getElementById("tableArea").rows[i].cells[j].className = "displayNone";
+                        document.getElementById("tableArea").rows[i].cells[j].classList.remove("displayTrue");
+                        document.getElementById("tableArea").rows[i].cells[j].classList.add("displayNone");
                     } else {
-                        document.getElementById("tableArea").rows[i].cells[j].className = "displayTrue";
+                        document.getElementById("tableArea").rows[i].cells[j].classList.remove("displayNone");
+                        document.getElementById("tableArea").rows[i].cells[j].classList.add("displayTrue");
                     };
                 };
             };

@@ -71,7 +71,7 @@ function initTableField() {
     timeTable.data.tableField = new Array();
     for (var i = 0; i < 15; i++) {
         timeTable.data.tableField[i] = new Array();
-        for (var j = 0; j < 7; j++) {
+        for (var j = 0; j <= 7; j++) {
             timeTable.data.tableField[i][j] = new Object();
             timeTable.data.tableField[i][j].course = 'TestCourse';
             timeTable.data.tableField[i][j].classRoom = 'TestRoom';

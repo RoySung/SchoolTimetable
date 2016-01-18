@@ -47,7 +47,7 @@ function switchWeekType() {
 function saveChange() {
     // save change and switch to view
     modalController('#modal-SaveAlert', "hide");
-    updateDB(0, "tableField", JSON.stringify(timeTable.data.tableField));
+    updateDB(1, "tableField", JSON.stringify(timeTable.data.tableField));
     clearSelected();
     timeTable.mode = "view";
     setMode();

@@ -138,7 +138,7 @@
                     <h4 class="modal-title">Export</h4>
                 </div>
                 <div class="modal-body">
-                    <button type="button" class="btn btn-large btn-block btn-primary">Export Json File</button>
+                    <button type="button" class="btn btn-large btn-block btn-primary" onclick="exportCSV()">Export CSV File</button>
                     <p class="help-block">Export json file to your local device.</p>
                 </div>
                 <div class="modal-footer">
@@ -163,7 +163,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Start Import</button>
+                    <button type="button" class="btn btn-primary" onclick="importCSV()">Start Import</button>
                 </div>
             </div>
         </div>
@@ -246,6 +246,7 @@
 <script type="text/javascript" src="js/setElemen.js"></script>
 <script type="text/javascript" src="js/action.js"></script>
 <script type="text/javascript" src="js/database.js"></script>
+<script type="text/javascript" src="js/convertCSV.js"></script>
 <script type="text/javascript">
 document.addEventListener("deviceready", onDeviceReady, false);
 var timeTable;

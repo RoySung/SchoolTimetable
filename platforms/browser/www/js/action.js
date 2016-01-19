@@ -47,7 +47,7 @@ function switchWeekType() {
 function saveChange() {
     // save change and switch to view
     modalController('#modal-SaveAlert', "hide");
-    updateDB(0, "tableField", JSON.stringify(timeTable.data.tableField));
+    updateDB(1, "tableField", JSON.stringify(timeTable.data.tableField));
     clearSelected();
     timeTable.mode = "view";
     setMode();
@@ -122,4 +122,54 @@ function ClassEvent() {
 
 function modalController(modalId, method) {
     $(modalId).modal(method);
+}
+
+function exportCSV() {
+    var exportArray = new Array();
+    for (var i = 0; i < 15; i++) {
+        for (var j = 0; j < 7; j++) {
+            exportArray[i * 7 + j] = new Object();
+            exportArray[i * 7 + j].period = i + 1;
+            exportArray[i * 7 + j].day = j + 1;
+            exportArray[i * 7 + j].course = timeTable.data.tableField[i][j].course;
+            exportArray[i * 7 + j].classRoom = timeTable.data.tableField[i][j].classRoom;
+            exportArray[i * 7 + j].isRemind = timeTable.data.tableField[i][j].isRemind;
+            exportArray[i * 7 + j].remindTime = timeTable.data.tableField[i][j].remindTime;
+            exportArray[i * 7 + j].cellColor = timeTable.data.tableField[i][j].cellColor;
+        }
+    }
+    exportArray[105] = new Object();
+    exportArray[105].tableName = "news";
+    exportArray[105].tableType = "day";
+
+    JSONToCSVConvertor(exportArray, timeTable.data.tableName, true);
+}
+
+function importCSV() {
+    var file = $('#ImportFile')[0].files[0];
+    if(file == null) {
+        alert("Please Select File.");
+        return;
+    }
+    if (file.type.match(/text\/csv/) || file.type.match(/vnd\.ms-excel/)) {
+        oFReader = new FileReader();
+        oFReader.onloadend = function() {
+            var json = csvJSON(this.result);
+            var inputData = JSON.parse(json);
+            timeTable.data.tableName = inputData[inputData.length - 1].period;
+            timeTable.data.tableType = inputData[inputData.length - 1].day;
+            for (var i = 0; i < inputData.length - 1; i++) {
+                period = inputData[i].period - 1;
+                day = inputData[i].day - 1;
+                timeTable.data.tableField[period][day].course = inputData[i].course;
+                timeTable.data.tableField[period][day].classRoom = inputData[i].classRoom;
+                timeTable.data.tableField[period][day].isRemind = inputData[i].isRemind;
+                timeTable.data.tableField[period][day].remindTime = inputData[i].remindTime;
+                timeTable.data.tableField[period][day].cellColor = inputData[i].cellColor;
+            }
+        };
+        oFReader.readAsText(file);
+    } else {
+        console.log("This file does not seem to be a CSV.");
+    }
 }

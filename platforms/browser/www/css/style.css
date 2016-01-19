@@ -1,0 +1,30 @@
+<style type="text/css" media="screen">
+#header {
+	margin-bottom: 0px;
+}
+
+#dropdown-menu {
+	margin: 10px;
+}
+
+.displayNone {
+	display: none;
+}
+
+.selected {
+	background-color: #5E9FF2;
+}
+#tableArea {
+	table-layout: fixed;
+}
+
+.timeCells {
+	width: 10%;
+}
+
+.classCells {
+	width: 18%;
+	text-align: center;
+	word-wrap: break-word;
+}
+</style>

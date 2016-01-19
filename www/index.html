@@ -1,49 +1,276 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<html lang="en">
 
-    http://www.apache.org/licenses/LICENSE-2.0
+<head>
+    <meta charset="UTF-8">
+    <title>SchoolTimeTable</title>
+    <!-- JQuery -->
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Load style.css -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+<body>
+    <!-- Header Navbar -->
+    <nav id="header" class="navbar navbar-default" role="navigation">
+        <a class="navbar-brand">SchoolTimeTable</a>
+        <div id="dropdown-menu" class="dropdown pull-right">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a data-toggle="modal" href='#modal-Export'>Export</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a data-toggle="modal" href='#modal-Import'>Import</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a data-toggle="modal" href='#modal-About'>About</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Container -->
+    <div class="container">
+        <button type="button" class="btn btn-default" onclick="switchTableType()">
+            <span id="tableTypeIcon" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default" onclick="switchWeekType()">
+            <span id="weekTypeIcon" aria-hidden="true"></span>
+        </button>
+        <div class="pull-right">
+            <button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
+                <span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
+            </button>
+            <button type="button" id="restoreBtn" class="btn btn-default" onclick="modalController('#modal-RestoreAlert','show');">
+                <span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default" onclick="switchMode()">
+                <span id="ModeIcon" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div>
+            <table id="tableArea" class="table table-bordered">
+                <colgroup>
+                    <col style="width:10%" />
+                    <col style="width:18%" />
+                    <col style="width:18%" />
+                    <col style="width:18%" />
+                    <col style="width:18%" />
+                    <col style="width:18%" />
+                </colgroup>
+                <thead id="tableHeadArea">
+                    <tr id="trHead">
+                        <th>
+                        </th>
+                        <!-- create tabel head dynamically -->
+                    </tr>
+                </thead>
+                <tbody id="tableBodyArea">
+                    <!-- create table body dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Modal Class Information -->
+    <div class="modal fade" id="modal-ClassInfo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Class Information</h4>
+                </div>
+                <div class="modal-body">
+                    <span>ClassName:</span><span id="classInfo-className"></span><br><br>
+                    <span>ClassRoom:</span><span id="classInfo-classRoom"></span><br><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+    </div>
+    <!-- Modal Class Edit -->
+    <div class="modal fade" id="modal-ClassEdit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Class Edit</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" role="form">
+                        <div class="form-group">
+                            <label for="">Class Name</label>
+                            <input type="text" class="form-control" id="input_class_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Class Room</label>
+                            <input type="text" class="form-control" id="input_class_room">
+                        </div>
+                        <!-- <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="remind"> Checkbox
+                                </label>
+                            </div>
+                            <select id="input" class="form-control">
+                                <option value=""> Select One </option>
+                            </select>
+                        </div> -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="save()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Export -->
+    <div class="modal fade" id="modal-Export">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Export</h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-large btn-block btn-primary" onclick="exportCSV()">Export CSV File</button>
+                    <p class="help-block">Export json file to your local device.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Import -->
+    <div class="modal fade" id="modal-Import">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Import</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="file" id="ImportFile">
+                        <p class="help-block">Select json file to import.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="importCSV()">Start Import</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Modal -->
+    <div class="modal fade" id="modal-About">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">About</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Here is some directions about software.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Switch Save Alert -->
+    <div class="modal fade" id="modal-SaveAlert">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Save Alert</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to leave and save your change?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChange()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Select Alert -->
+    <div class="modal fade" id="modal-SelectAlert">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Select </h4>
+                </div>
+                <div class="modal-body">
+                    <p>Please select class time to edit.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Got it</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Restore Alert -->
+    <div class="modal fade" id="modal-RestoreAlert">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Restore</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to restore you time table?</p>
+                    <p>It will restore this time of modification.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="restore()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/setElemen.js"></script>
+<script type="text/javascript" src="js/action.js"></script>
+<script type="text/javascript" src="js/database.js"></script>
+<script type="text/javascript" src="js/convertCSV.js"></script>
+<script type="text/javascript">
+document.addEventListener("deviceready", onDeviceReady, false);
+var timeTable;
+var db;
+
+function onDeviceReady() {
+    timeTable = new timeTable();
+    db = window.sqlitePlugin.openDatabase({
+        name: "schoolTimeTable.db"
+    });
+    setTimeTable();
+    setWeekType();
+    setTableType();
+    setMode();
+    // initTableField();
+    // setData();
+    loadDB();
+}
+
+function timeTable() {
+    this.mode = "view";
+    this.tableType = "day";
+    this.weekType = "normal";
+    this.data = new Object();
+    this.onSelected = new Array();
+}
+</script>

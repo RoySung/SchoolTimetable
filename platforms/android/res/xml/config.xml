@@ -18,6 +18,9 @@
     <feature name="Toast">
         <param name="android-package" value="nl.xservices.plugins.Toast" />
     </feature>
+    <feature name="FileChooser">
+        <param name="android-package" value="com.cesidiodibenedetto.filechooser.FileChooser" />
+    </feature>
     <allow-intent href="market:*" />
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />

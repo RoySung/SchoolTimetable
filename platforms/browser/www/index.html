@@ -262,9 +262,17 @@ function onDeviceReady() {
     setWeekType();
     setTableType();
     setMode();
-    // initTableField();
+     initTableField();
     // setData();
-    loadDB();
+    //loadDB();
+    $('#ImportFile').click( function(e) {
+        filechooser.open( {}, function(data) {
+            $('#ImportFile')[0].files[0] = data.filepath;
+            console.log($('#ImportFile')[0].files[0]);
+        }, function(e) {
+            console.log("Error:" + e);
+        });
+    });
 }
 
 function timeTable() {

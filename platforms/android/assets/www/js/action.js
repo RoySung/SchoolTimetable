@@ -167,6 +167,7 @@ function importCSV() {
                 timeTable.data.tableField[period][day].remindTime = inputData[i].remindTime;
                 timeTable.data.tableField[period][day].cellColor = inputData[i].cellColor;
             }
+            console.log(timeTable.data);
         };
         oFReader.readAsText(file);
     } else {

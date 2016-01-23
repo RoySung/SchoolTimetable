@@ -223,6 +223,14 @@ module.exports = [
         "file": "plugins/cordova-plugin-x-toast/test/tests.js",
         "id": "cordova-plugin-x-toast.tests",
         "pluginId": "cordova-plugin-x-toast"
+    },
+    {
+        "file": "plugins/com.cesidiodibenedetto.filechooser/www/filechooser.js",
+        "id": "com.cesidiodibenedetto.filechooser.FileChooser",
+        "pluginId": "com.cesidiodibenedetto.filechooser",
+        "clobbers": [
+            "FileChooser"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -232,7 +240,8 @@ module.exports.metadata =
     "cordova-sqlite-storage": "0.7.15-pre",
     "cordova-plugin-file": "4.1.0",
     "cordova-plugin-file-transfer": "1.5.0",
-    "cordova-plugin-x-toast": "2.3.2"
+    "cordova-plugin-x-toast": "2.3.2",
+    "com.cesidiodibenedetto.filechooser": "1.0.0"
 }
 // BOTTOM OF METADATA
 });

@@ -74,6 +74,7 @@ function updateDB(id, field, value) {
 }
 
 function initTableField() {
+    timeTable.data.tableName = "News";
     timeTable.data.tableField = new Array();
     for (var i = 0; i < 15; i++) {
         timeTable.data.tableField[i] = new Array();

@@ -21,6 +21,9 @@
         },
         "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
+        "com.cesidiodibenedetto.filechooser": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
         }
     },
     "dependent_plugins": {}

@@ -39,7 +39,14 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     link.click();
     document.body.removeChild(link);
 
-    Filecontroller("write", fileName+".csv", CSV);
+    Filecontroller("write", fileName + ".csv", CSV);
+    //For Android
+    window.plugins.toast.showLongBottom('Export CSV , Name :' + fileName + ".csv", function(a) {
+        console.log('toast Export CSV Success');
+    }, function(b) {
+        alert('toast error: ' + b)
+    });
+    modalController('#modal-Export', "hide");
 }
 
 function csvJSON(csv) {

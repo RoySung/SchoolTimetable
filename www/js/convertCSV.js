@@ -40,11 +40,13 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     document.body.removeChild(link);
 
     Filecontroller("write", fileName + ".csv", CSV);
+    
     window.plugins.toast.showLongBottom('Export CSV , Name :' + fileName + ".csv", function(a) {
         console.log('toast Export CSV Success');
     }, function(b) {
         alert('toast error: ' + b)
     });
+    modalController('#modal-Export', "hide");
 }
 
 function csvJSON(csv) {

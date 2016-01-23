@@ -210,6 +210,19 @@ module.exports = [
         "clobbers": [
             "window.FileTransfer"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-x-toast/www/Toast.js",
+        "id": "cordova-plugin-x-toast.Toast",
+        "pluginId": "cordova-plugin-x-toast",
+        "clobbers": [
+            "window.plugins.toast"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-x-toast/test/tests.js",
+        "id": "cordova-plugin-x-toast.tests",
+        "pluginId": "cordova-plugin-x-toast"
     }
 ];
 module.exports.metadata = 
@@ -218,7 +231,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.2.0",
     "cordova-sqlite-storage": "0.7.15-pre",
     "cordova-plugin-file": "4.1.0",
-    "cordova-plugin-file-transfer": "1.5.0"
+    "cordova-plugin-file-transfer": "1.5.0",
+    "cordova-plugin-x-toast": "2.3.2"
 }
 // BOTTOM OF METADATA
 });

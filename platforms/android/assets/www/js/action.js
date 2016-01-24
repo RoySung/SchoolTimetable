@@ -91,6 +91,7 @@ function reset() {
         initTableField();
         modalController('#modal-SaveAlert', "hide");
         updateDB(1, "tableField", JSON.stringify(timeTable.data.tableField));
+        setData();
         clearSelected();
     } else if (device.platform == "browser") {
         initTableField();

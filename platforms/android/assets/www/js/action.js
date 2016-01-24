@@ -85,6 +85,20 @@ function restore() {
     modalController('#modal-RestoreAlert', "hide");
 }
 
+function reset() {
+    clearSelected();
+    if (device.platform == "Android") {
+        initTableField();
+        modalController('#modal-SaveAlert', "hide");
+        updateDB(1, "tableField", JSON.stringify(timeTable.data.tableField));
+        clearSelected();
+    } else if (device.platform == "browser") {
+        initTableField();
+        setData();   
+    }
+    modalController('#modal-Reset', "hide");   
+}
+
 function clearSelected() {
     var table = document.getElementById("tableArea");
     for (var i = timeTable.onSelected.length - 1; i >= 0; i--) {

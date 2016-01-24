@@ -159,7 +159,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="file" id="ImportFile">
+                        <input type="file" id="ImportFile_browser">
+                        <button type="button" class="btn btn-default" id="ImportFile_android">Select File</button>
+                        <p id="path_android" >Path</p>
                         <p class="help-block">Select json file to import.</p>
                     </div>
                 </div>
@@ -285,18 +287,24 @@ function onDeviceReady() {
     setMode();
     //For Android 4.4
     if (device.platform == "Android") {
+
+        $('#ImportFile_browser').addClass('displayNone');
+        
         loadDB();
-        $('#ImportFile').click( function(e) {
+        $('#ImportFile_android').click( function(e) {
             filechooser.open( {}, function(data) {
-                $('#ImportFile')[0].files[0] = data.filepath;
-                console.log($('#ImportFile')[0].files[0]);
+                $('#ImportFile_browser')[0].files[0] = data.filepath;
+                console.log(data.filepath);
+                $('#path_android').html(data.filepath);
             }, function(e) {
                 console.log("Error:" + e);
             });
         });
     } else if (device.platform == "browser") {
+        $('#ImportFile_browser').addClass('displayNone');
+        $('#ImportFile_android').addClass('displayNone');
+        $('#path_android').addClass('displayNone');
         initTableField();
-        console.log(timeTable.data);
     }
     
 }

@@ -160,6 +160,8 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="file" id="ImportFile">
+                        <button type="button" class="btn btn-default" id="ImportFile_android">Select File</button>
+                        <span id="path_android" >Path</span>
                         <p class="help-block">Select json file to import.</p>
                     </div>
                 </div>
@@ -285,15 +287,20 @@ function onDeviceReady() {
     setMode();
     //For Android 4.4
     if (device.platform == "Android") {
+        $('#ImportFile').addClass('displayNone');
         loadDB();
-        $('#ImportFile').click( function(e) {
+        $('#ImportFile_android').click( function(e) {
             filechooser.open( {}, function(data) {
-                $('#ImportFile')[0].files[0] = data.filepath;
+                $('#ImportFile')[0].files[0] = data.filepath.split("/storage/emulated/0/");
+                console.log(data.filepath);
+                $('#path_android').html($('#ImportFile')[0].files[0]);
             }, function(e) {
                 console.log("Error:" + e);
             });
         });
     } else if (device.platform == "browser") {
+        $('#ImportFile_android').addClass('displayNone');
+        $('#path_android').addClass('displayNone');
         initTableField();
     }
     

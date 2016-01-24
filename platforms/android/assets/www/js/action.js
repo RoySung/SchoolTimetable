@@ -177,8 +177,6 @@ function importCSV() {
     if (device.platform == "Android") {
         //In Android
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
-            file = file.split("/storage/emulated/0/");
-            console.log(file);
             fileSystem.root.getFile(file[1], {
                 create: true,
                 exclusive: false
@@ -189,6 +187,8 @@ function importCSV() {
                     reader.onloadend = function(e) {
                         var json = csvJSON(this.result);
                         importData(json);
+                        $('#path_android').html('Path');
+                        $('#ImportFile')[0].files[0] = null;
                     };
                 }, errorHandler);
             }, errorHandler);

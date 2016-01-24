@@ -67,8 +67,8 @@ function save() {
         console.log(timeTable.onSelected[i]);
         var course = document.getElementById("input_class_name").value;
         var classRoom = document.getElementById("input_class_room").value;
-        timeTable.data.tableField[timeTable.onSelected[i].row-1][timeTable.onSelected[i].cell-1].course = course;
-        timeTable.data.tableField[timeTable.onSelected[i].row-1][timeTable.onSelected[i].cell-1].classRoom = classRoom;
+        timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].course = course;
+        timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].classRoom = classRoom;
     };
     modalController('#modal-ClassEdit', "hide");
     setData();
@@ -92,9 +92,9 @@ function ClassEvent() {
     var table = document.getElementById("tableArea");
     switch (timeTable.mode) {
         case "view":
-            console.log(timeTable.data.tableField[this.parentNode.rowIndex-1][this.cellIndex-1]);
-            document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex-1][this.cellIndex-1].course;
-            document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex-1][this.cellIndex-1].classRoom;
+            console.log(timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1]);
+            document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].course;
+            document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].classRoom;
             modalController('#modal-ClassInfo', "show");
             break;
         case "edit":
@@ -147,29 +147,42 @@ function exportCSV() {
 
 function importCSV() {
     var file = $('#ImportFile')[0].files[0];
-    if(file == null) {
+    if (file == null) {
         alert("Please Select File.");
         return;
     }
-    if (file.type.match(/text\/csv/) || file.type.match(/vnd\.ms-excel/)) {
-        oFReader = new FileReader();
-        oFReader.onloadend = function() {
-            var json = csvJSON(this.result);
-            var inputData = JSON.parse(json);
-            timeTable.data.tableName = inputData[inputData.length - 1].period;
-            timeTable.data.tableType = inputData[inputData.length - 1].day;
-            for (var i = 0; i < inputData.length - 1; i++) {
-                period = inputData[i].period - 1;
-                day = inputData[i].day - 1;
-                timeTable.data.tableField[period][day].course = inputData[i].course;
-                timeTable.data.tableField[period][day].classRoom = inputData[i].classRoom;
-                timeTable.data.tableField[period][day].isRemind = inputData[i].isRemind;
-                timeTable.data.tableField[period][day].remindTime = inputData[i].remindTime;
-                timeTable.data.tableField[period][day].cellColor = inputData[i].cellColor;
-            }
-        };
-        oFReader.readAsText(file);
-    } else {
-        console.log("This file does not seem to be a CSV.");
+    timeTable.mode = "edit";
+    setMode();
+    if (device.platform == "Android") {
+        //In Android
+
+    } else if (device.platform == "browser") {
+        if (file.type.match(/text\/csv/) || file.type.match(/vnd\.ms-excel/)) {
+            oFReader = new FileReader();
+            oFReader.readAsText(file);
+            oFReader.onloadend = function() {
+                var json = csvJSON(this.result);
+                importData(json);
+            };
+        } else {
+            console.log("This file does not seem to be a CSV.");
+        }
     }
+    $('#modal-Import').modal('hide');
+}
+
+function importData(json) {
+    var inputData = JSON.parse(json);
+    timeTable.data.tableName = inputData[inputData.length - 1].period;
+    timeTable.data.tableType = inputData[inputData.length - 1].day;
+    for (var i = 0; i < inputData.length - 1; i++) {
+        period = inputData[i].period - 1;
+        day = inputData[i].day - 1;
+        timeTable.data.tableField[period][day].course = inputData[i].course;
+        timeTable.data.tableField[period][day].classRoom = inputData[i].classRoom;
+        timeTable.data.tableField[period][day].isRemind = inputData[i].isRemind;
+        timeTable.data.tableField[period][day].remindTime = inputData[i].remindTime;
+        timeTable.data.tableField[period][day].cellColor = inputData[i].cellColor;
+    }
+    setData();
 }

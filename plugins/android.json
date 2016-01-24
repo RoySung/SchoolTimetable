@@ -12,6 +12,21 @@
         },
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
+        "com.cesidiodibenedetto.filechooser": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
         }
     },
     "dependent_plugins": {}

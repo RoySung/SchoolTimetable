@@ -21,6 +21,9 @@
     <feature name="FileChooser">
         <param name="android-package" value="com.cesidiodibenedetto.filechooser.FileChooser" />
     </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
     <allow-intent href="market:*" />
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />

@@ -217,6 +217,14 @@ module.exports = [
         "clobbers": [
             "FileChooser"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device/www/device.js",
+        "id": "cordova-plugin-device.device",
+        "pluginId": "cordova-plugin-device",
+        "clobbers": [
+            "device"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -227,7 +235,8 @@ module.exports.metadata =
     "cordova-plugin-file": "4.1.0",
     "cordova-plugin-file-transfer": "1.5.0",
     "cordova-plugin-x-toast": "2.3.2",
-    "com.cesidiodibenedetto.filechooser": "1.0.0"
+    "com.cesidiodibenedetto.filechooser": "1.0.0",
+    "cordova-plugin-device": "1.1.1"
 }
 // BOTTOM OF METADATA
 });

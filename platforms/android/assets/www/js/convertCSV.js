@@ -35,17 +35,20 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     link.href = uri;
     link.style = "visibility:hidden";
     link.download = fileName + ".csv";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
 
-    Filecontroller("write", fileName + ".csv", CSV);
-    //For Android
-    window.plugins.toast.showLongBottom('Export CSV , Name :' + fileName + ".csv", function(a) {
-        console.log('toast Export CSV Success');
-    }, function(b) {
-        alert('toast error: ' + b)
-    });
+
+    if (device.platform == "Android") {
+        Filecontroller("write", fileName + ".csv", CSV);
+        //For Android
+        window.plugins.toast.showLongBottom('Export CSV , Name :' + fileName + ".csv", function(a) {
+            console.log('toast Export CSV Success');
+        }, function(b) {
+            alert('toast error: ' + b)
+        });    
+    } else if (device.platform == "browser") {
+        link.click();
+    }
+
     modalController('#modal-Export', "hide");
 }
 

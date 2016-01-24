@@ -264,17 +264,24 @@ function onDeviceReady() {
     setMode();
     // initTableField();
     // setData();
-    loadDB();
+    
     
     //For Android 4.4
-    $('#ImportFile').click( function(e) {
-        filechooser.open( {}, function(data) {
-            $('#ImportFile')[0].files[0] = data.filepath;
-            console.log($('#ImportFile')[0].files[0]);
-        }, function(e) {
-            console.log("Error:" + e);
+    if (device.platform == "Android") {
+        loadDB();    
+        $('#ImportFile').click( function(e) {
+            filechooser.open( {}, function(data) {
+                $('#ImportFile')[0].files[0] = data.filepath;
+                console.log($('#ImportFile')[0].files[0]);
+            }, function(e) {
+                console.log("Error:" + e);
+            });
         });
-    });
+    } else if (device.platform == "browser") {
+        initTableField();
+        console.log(timeTable.data);
+    }
+    
 }
 
 function timeTable() {

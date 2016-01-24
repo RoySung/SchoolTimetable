@@ -24,6 +24,9 @@
         },
         "com.cesidiodibenedetto.filechooser": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
         }
     },
     "dependent_plugins": {}

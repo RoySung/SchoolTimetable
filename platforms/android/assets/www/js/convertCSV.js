@@ -27,7 +27,7 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
         return;
     }
 
-    fileName = "SchoolTomeTable_";
+    fileName = "SchoolTimeTable_";
     fileName += ReportTitle.replace(/ /g, "_");
 
     uri = 'data:text/csv;charset=utf-8,' + escape(CSV);

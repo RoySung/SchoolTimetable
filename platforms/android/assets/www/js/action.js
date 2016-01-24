@@ -176,7 +176,23 @@ function importCSV() {
     setMode();
     if (device.platform == "Android") {
         //In Android
-
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
+            file = file.split("/storage/emulated/0/");
+            console.log(file);
+            fileSystem.root.getFile(file[1], {
+                create: true,
+                exclusive: false
+            }, function(fileEntry) {
+                fileEntry.file(function(file) {
+                    var reader = new FileReader();
+                    reader.readAsText(file);
+                    reader.onloadend = function(e) {
+                        var json = csvJSON(this.result);
+                        importData(json);
+                    };
+                }, errorHandler);
+            }, errorHandler);
+        }, errorHandler);
     } else if (device.platform == "browser") {
         if (file.type.match(/text\/csv/) || file.type.match(/vnd\.ms-excel/)) {
             oFReader = new FileReader();

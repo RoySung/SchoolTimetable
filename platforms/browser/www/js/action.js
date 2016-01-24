@@ -76,6 +76,12 @@ function save() {
 
 function restore() {
     clearSelected();
+    if (device.platform == "Android") {
+        loadDB();
+    } else if (device.platform == "browser") {
+        initTableField();
+        setData();   
+    }
     modalController('#modal-RestoreAlert', "hide");
 }
 

@@ -76,7 +76,28 @@ function save() {
 
 function restore() {
     clearSelected();
+    if (device.platform == "Android") {
+        loadDB();
+    } else if (device.platform == "browser") {
+        initTableField();
+        setData();   
+    }
     modalController('#modal-RestoreAlert', "hide");
+}
+
+function reset() {
+    clearSelected();
+    if (device.platform == "Android") {
+        initTableField();
+        modalController('#modal-SaveAlert', "hide");
+        updateDB(1, "tableField", JSON.stringify(timeTable.data.tableField));
+        setData();
+        clearSelected();
+    } else if (device.platform == "browser") {
+        initTableField();
+        setData();   
+    }
+    modalController('#modal-Reset', "hide");   
 }
 
 function clearSelected() {

@@ -25,13 +25,13 @@
                 <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a data-toggle="modal" href='#modal-Export'>Export</a></li>
+                <li><a data-toggle="modal" href='#modal-Export'>匯出</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a data-toggle="modal" href='#modal-Import'>Import</a></li>
+                <li><a data-toggle="modal" href='#modal-Import'>匯入</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a data-toggle="modal" href='#modal-Reset'>Reset</a></li>
+                <li><a data-toggle="modal" href='#modal-Reset'>重設</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a data-toggle="modal" href='#modal-About'>About</a></li>
+                <li><a data-toggle="modal" href='#modal-About'>關於我們</a></li>
             </ul>
         </div>
     </nav>
@@ -88,21 +88,13 @@
                     <h4 id="classInfo-title" class="modal-title">Class Information</h4>
                 </div>
                 <div class="modal-body">
-                    <span>ClassName:</span><span id="classInfo-className"></span>
-                    <br>
-                    <br>
-                    <span>ClassRoom:</span><span id="classInfo-classRoom"></span>
-                    <br>
-                    <br>
-                    <span>RemindMe:</span><span id="classInfo-remindMe"></span>
-                    <br>
-                    <br>
-                    <span id="classInfoText-remindTime">RemindTime:</span><span id="classInfo-remindTime"></span>
-                    <br>
-                    <br>
+                    <span>課程名稱:</span><span id="classInfo-className"></span><br><br>
+                    <span>課程教室:</span><span id="classInfo-classRoom"></span><br><br>
+                    <span>RemindMe:</span><span id="classInfo-remindMe"></span><br><br>
+                    <span id="classInfoText-remindTime">RemindTime:</span><span id="classInfo-remindTime"></span><br><br>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
                 </div>
             </div>
         </div>
@@ -113,16 +105,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Class Edit</h4>
+                    <h4 class="modal-title">課程編輯</h4>
                 </div>
                 <div class="modal-body">
                     <form action="" method="POST" role="form">
                         <div class="form-group">
-                            <label for="">Class Name</label>
+                            <label for="">課程名稱</label>
                             <input type="text" class="form-control" id="input_class_name">
                         </div>
                         <div class="form-group">
-                            <label for="">Class Room</label>
+                            <label for="">課程教室</label>
                             <input type="text" class="form-control" id="input_class_room">
                         </div>
                         <div class="form-group">
@@ -141,8 +133,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="save()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                    <button type="button" class="btn btn-primary" onclick="save()">儲存</button>
                 </div>
             </div>
         </div>
@@ -153,14 +145,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Export</h4>
+                    <h4 class="modal-title">匯出</h4>
                 </div>
                 <div class="modal-body">
-                    <button type="button" class="btn btn-large btn-block btn-primary" onclick="exportCSV()">Export CSV File</button>
-                    <p class="help-block">Export json file to your local device.</p>
+                    <button type="button" class="btn btn-large btn-block btn-primary" onclick="exportCSV()">匯出 CSV</button>
+                    <p class="help-block">匯出 *.csv 檔案至行動裝置.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
                 </div>
             </div>
         </div>
@@ -171,19 +163,19 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Import</h4>
+                    <h4 class="modal-title">匯入</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="file" id="ImportFile">
-                        <button type="button" class="btn btn-default" id="ImportFile_android">Select File</button>
-                        <p id="path_android">Path</p>
-                        <p class="help-block">Select json file to import.</p>
+                        <button type="button" class="btn btn-default" id="ImportFile_android">選擇檔案</button>
+                        <span id="path_android">Path</span>
+                        <p class="help-block">選擇 *.csv檔案 , 匯入課表資料</p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="importCSV()">Start Import</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                    <button type="button" class="btn btn-primary" onclick="importCSV()">匯入</button>
                 </div>
             </div>
         </div>
@@ -194,13 +186,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">About</h4>
+                    <h4 class="modal-title">關於我們</h4>
                 </div>
                 <div class="modal-body">
                     <p>Here is some directions about software.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
                 </div>
             </div>
         </div>
@@ -211,14 +203,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Save Alert</h4>
+                    <h4 class="modal-title">儲存確認</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure to leave and save your change?</p>
+                    <p>確定要離開編輯模式 , 以及儲存目前的更改嗎 ?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="saveChange()">Save Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChange()">儲存</button>
                 </div>
             </div>
         </div>
@@ -229,13 +221,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Select </h4>
+                    <h4 class="modal-title">提醒</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Please select class time to edit.</p>
+                    <p>請選擇要更改的課堂</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Got it</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">確定</button>
                 </div>
             </div>
         </div>
@@ -246,15 +238,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Restore</h4>
+                    <h4 class="modal-title">重設更改</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure to restore you time table?</p>
-                    <p>It will restore this time of modification.</p>
+                    <p>確定取消全部的更改嗎 ?</p>
+                    <p>將會將你目前的更動復原至之前的狀態.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="restore()">Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="restore()">重設</button>
                 </div>
             </div>
         </div>
@@ -265,15 +257,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Restore</h4>
+                    <h4 class="modal-title">回復初始狀態</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure to reset you time table?</p>
-                    <p>You will loss your every data</p>
+                    <p>確定要清空的全部資料 ?</p>
+                    <p>將會回復至初始狀態 , 您課表內所有的資料都將會消失</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" onclick="reset()">Yes,Reset</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" onclick="reset()">清空</button>
                 </div>
             </div>
         </div>

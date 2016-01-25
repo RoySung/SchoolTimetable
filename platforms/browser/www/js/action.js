@@ -68,8 +68,17 @@ function save() {
         console.log(timeTable.onSelected[i]);
         var course = document.getElementById("input_class_name").value;
         var classRoom = document.getElementById("input_class_room").value;
+        var isRemind = document.getElementById("remindCheckbox").checked;
+        if (isRemind) {
+            var remindTime = document.getElementById("remindSelect").options[document.getElementById("remindSelect").selectedIndex].value;
+        } else{
+            var remindTime = "";
+        };
         timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].course = course;
         timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].classRoom = classRoom;
+        timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].isRemind = isRemind;
+        timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].remindTime = remindTime;
+
     };
     modalController('#modal-ClassEdit', "hide");
     setData();
@@ -119,6 +128,7 @@ function ClassEvent() {
             document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].classRoom;
             if (timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].isRemind) {
                 document.getElementById("classInfo-remindMe").innerHTML = " Yes ";
+                document.getElementById("classInfo-remindTime").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].remindTime;;
                 document.getElementById("classInfo-remindTime").className = "displayTrue";
                 document.getElementById("classInfoText-remindTime").className = "displayTrue";
             } else{

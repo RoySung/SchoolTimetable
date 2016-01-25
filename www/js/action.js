@@ -57,6 +57,7 @@ function edit() {
     console.log(timeTable.onSelected);
     if (timeTable.onSelected.length != 0) {
         modalController('#modal-ClassEdit', "show");
+        document.getElementById("remindSelect").disabled=true;
     } else {
         modalController('#modal-SelectAlert', "show");
     };
@@ -116,6 +117,15 @@ function ClassEvent() {
             console.log(timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1]);
             document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].course;
             document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].classRoom;
+            if (timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].isRemind) {
+                document.getElementById("classInfo-remindMe").innerHTML = " Yes ";
+                document.getElementById("classInfo-remindTime").className = "displayTrue";
+                document.getElementById("classInfoText-remindTime").className = "displayTrue";
+            } else{
+                document.getElementById("classInfo-remindMe").innerHTML = " No ";
+                document.getElementById("classInfo-remindTime").className = "displayNone";
+                document.getElementById("classInfoText-remindTime").className = "displayNone";
+            };
             modalController('#modal-ClassInfo', "show");
             break;
         case "edit":

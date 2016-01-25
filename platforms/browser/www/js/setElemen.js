@@ -142,3 +142,9 @@ function setData() {
         }
     }
 }
+
+function setRemind(checkbox) {
+    document.getElementById("remindSelect").disabled = !checkbox.checked;
+    console.log("Clicked, new value = " + checkbox.checked);
+
+}

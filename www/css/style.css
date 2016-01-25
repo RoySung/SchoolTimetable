@@ -1,24 +1,4 @@
 <style type="text/css" media="screen"> 
-
-.displayNone {
-    display: none;
-}
-
-.selected {
-    background-color: #5E9FF2;
-}
-
-.timeCells {
-    width: 10%;
-}
-
-.classCells {
-    width: 18%;
-    text-align: center;
-    word-wrap: break-word;
-}
-
-/*Page Header and Menu Button*/
 #header {
     margin-bottom: 0px;
 }
@@ -47,13 +27,32 @@
     margin-bottom: 15px;
 }
 
-/*table*/
-th {
-    text-align: center;
+
+.displayNone {
+    display: none;
+}
+
+.selected {
+    background-color: #5E9FF2;
 }
 
 #tableArea {
     table-layout: fixed;
+}
+
+.timeCells {
+    width: 10%;
+}
+
+.classCells {
+    width: 18%;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+/*table*/
+th {
+    text-align: center;
 }
 
 #tableHeadArea {

@@ -29,7 +29,7 @@
 
 
 .displayNone {
-    display: none;
+    display: none !important;
 }
 
 .selected {

@@ -7,19 +7,19 @@ function setTimeTable() {
     var tableBody = document.getElementById("tableBodyArea");
     // append table head
     var txtHead = [{
-        "week": "星期一"
+        "week": "一"
     }, {
-        "week": "星期二"
+        "week": "二"
     }, {
-        "week": "星期三"
+        "week": "三"
     }, {
-        "week": "星期四"
+        "week": "四"
     }, {
-        "week": "星期五"
+        "week": "五"
     }, {
-        "week": "星期六"
+        "week": "六"
     }, {
-        "week": "星期天"
+        "week": "日"
     }];
     for (var i = 0; i < tableWeekLenght; i++) {
         var th = document.createElement('th');

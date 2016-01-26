@@ -56,12 +56,12 @@ th {
 }
 
 #tableHeadArea {
-    background-color: rgba(76, 255, 0, 0.42);
+    /*background-color: rgba(76, 255, 0, 0.42);*/
     text-align: center;
 }
 
 #tableBodyArea {
-    background-color: rgba(29, 255, 0, 0.21);
+    /*background-color: rgba(29, 255, 0, 0.21);*/
 }
 
 .table-bordered>tbody>tr>td,
@@ -70,7 +70,7 @@ th {
 .table-bordered>tfoot>tr>th,
 .table-bordered>thead>tr>td,
 .table-bordered>thead>tr>th {
-    border: 1px solid rgba(11, 90, 1, 0.2);
+    /*border: 1px solid rgba(11, 90, 1, 0.2);*/
 }
 
 /*dialog*/

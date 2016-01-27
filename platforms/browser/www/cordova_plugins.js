@@ -245,6 +245,15 @@ module.exports = [
         "id": "cordova-plugin-device.DeviceProxy",
         "pluginId": "cordova-plugin-device",
         "runs": true
+    },
+    {
+        "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification.js",
+        "id": "de.appplant.cordova.plugin.local-notification.LocalNotification",
+        "pluginId": "de.appplant.cordova.plugin.local-notification",
+        "clobbers": [
+            "cordova.plugins.notification.local",
+            "plugin.notification.local"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -256,7 +265,8 @@ module.exports.metadata =
     "cordova-plugin-file-transfer": "1.5.0",
     "cordova-plugin-x-toast": "2.3.2",
     "com.cesidiodibenedetto.filechooser": "1.0.0",
-    "cordova-plugin-device": "1.1.1"
+    "cordova-plugin-device": "1.1.1",
+    "de.appplant.cordova.plugin.local-notification": "0.8.1"
 }
 // BOTTOM OF METADATA
 });

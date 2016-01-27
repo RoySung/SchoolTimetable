@@ -56,5 +56,15 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "de.appplant.cordova.plugin.local-notification": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/DarianLewin/cordova-plugin-local-notifications.git",
+            "subdir": ".",
+            "ref": "issue-535-quick-fix"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

@@ -17,10 +17,10 @@
 
 <body>
     <!-- Header Navbar -->
-    <nav id="header" class="navbar navbar-default" role="navigation">
-        <a class="navbar-brand">SchoolTimeTable</a>
+    <nav id="header" class="navbar navbar-default header" role="navigation">
+        <a class="navbar-brand title">SchoolTimeTable</a>
         <div id="dropdown-menu" class="dropdown pull-right">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="btn btn-default dropdown-toggle btn-menu" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -36,20 +36,20 @@
     </nav>
     <!-- Container -->
     <div class="container">
-        <button type="button" class="btn btn-default" onclick="switchTableType()">
+        <button type="button" class="btn btn-default btn-menu" onclick="switchTableType()">
             <span id="tableTypeIcon" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-default" onclick="switchWeekType()">
+        <button type="button" class="btn btn-default btn-menu" onclick="switchWeekType()">
             <span id="weekTypeIcon" aria-hidden="true"></span>
         </button>
         <div class="pull-right">
-            <button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
+            <button type="button" id="editBtn" class="btn btn-default btn-menu" onclick="edit()">
                 <span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
             </button>
-            <button type="button" id="restoreBtn" class="btn btn-default" onclick="modalController('#modal-RestoreAlert','show');">
+            <button type="button" id="restoreBtn" class="btn btn-default btn-menu" onclick="modalController('#modal-RestoreAlert','show');">
                 <span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
             </button>
-            <button type="button" class="btn btn-default" onclick="switchMode()">
+            <button type="button" class="btn btn-default btn-menu" onclick="switchMode()">
                 <span id="ModeIcon" aria-hidden="true"></span>
             </button>
         </div>
@@ -125,7 +125,7 @@
                                 <option value="5"> 5 minute </option>
                                 <option value="10"> 10 minute </option>
                                 <option value="15"> 15 minute </option>
-                                <option value="15"> 30 minute </option>
+                                <option value="30"> 30 minute </option>
                             </select>
                         </div>
                     </form>
@@ -167,7 +167,7 @@
                     <div class="form-group">
                         <input type="file" id="ImportFile">
                         <button type="button" class="btn btn-default" id="ImportFile_android">Select File</button>
-                        <span id="path_android" >Path</span>
+                        <p id="path_android" >Path</p>
                         <p class="help-block">Select json file to import.</p>
                     </div>
                 </div>

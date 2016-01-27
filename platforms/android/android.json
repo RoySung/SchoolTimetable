@@ -9,11 +9,11 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"FileChooser\"><param name=\"android-package\" value=\"com.cesidiodibenedetto.filechooser.FileChooser\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.liteglue.SQLitePlugin\" /></feature>",
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
                         {
@@ -25,45 +25,19 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Toast\"><param name=\"android-package\" value=\"nl.xservices.plugins.Toast\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"FileChooser\"><param name=\"android-package\" value=\"com.cesidiodibenedetto.filechooser.FileChooser\" /></feature>",
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.liteglue.SQLitePlugin\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
-                            "count": 1
-                        }
-                    ]
-                }
-            },
-            "AndroidManifest.xml": {
-                "parents": {
-                    "/*": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
-                        }
-                    ],
-                    "/manifest": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 1
-                        }
-                    ],
-                    "/manifest/application": [
-                        {
-                            "xml": "<activity android:enabled=\"@bool/use_activity\" android:exported=\"true\" android:icon=\"@drawable/ic_chooser\" android:label=\"@string/choose_file\" android:name=\"com.ipaulpro.afilechooser.FileChooserActivity\"><intent-filter><action android:name=\"android.intent.action.GET_CONTENT\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"android.intent.category.OPENABLE\" /><data android:mimeType=\"*/*\" /></intent-filter></activity>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<provider android:authorities=\"com.ianhanniballake.localstorage.documents\" android:enabled=\"@bool/use_provider\" android:exported=\"true\" android:grantUriPermissions=\"true\" android:name=\"com.ianhanniballake.localstorage.LocalStorageProvider\" android:permission=\"android.permission.MANAGE_DOCUMENTS\"><intent-filter><action android:name=\"android.content.action.DOCUMENTS_PROVIDER\" /></intent-filter></provider>",
+                            "xml": "<feature name=\"LocalNotification\"><param name=\"android-package\" value=\"de.appplant.cordova.plugin.localnotification.LocalNotification\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -98,14 +72,76 @@
                         }
                     ]
                 }
+            },
+            "AndroidManifest.xml": {
+                "parents": {
+                    "/manifest": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/manifest/application": [
+                        {
+                            "xml": "<activity android:enabled=\"@bool/use_activity\" android:exported=\"true\" android:icon=\"@drawable/ic_chooser\" android:label=\"@string/choose_file\" android:name=\"com.ipaulpro.afilechooser.FileChooserActivity\"><intent-filter><action android:name=\"android.intent.action.GET_CONTENT\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"android.intent.category.OPENABLE\" /><data android:mimeType=\"*/*\" /></intent-filter></activity>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<provider android:authorities=\"com.ianhanniballake.localstorage.documents\" android:enabled=\"@bool/use_provider\" android:exported=\"true\" android:grantUriPermissions=\"true\" android:name=\"com.ianhanniballake.localstorage.LocalStorageProvider\" android:permission=\"android.permission.MANAGE_DOCUMENTS\"><intent-filter><action android:name=\"android.content.action.DOCUMENTS_PROVIDER\" /></intent-filter></provider>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<receiver android:exported=\"false\" android:name=\"de.appplant.cordova.plugin.localnotification.TriggerReceiver\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<receiver android:exported=\"false\" android:name=\"de.appplant.cordova.plugin.localnotification.ClearReceiver\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<activity android:exported=\"false\" android:launchMode=\"singleInstance\" android:name=\"de.appplant.cordova.plugin.localnotification.ClickActivity\" android:theme=\"@android:style/Theme.NoDisplay\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<receiver android:exported=\"false\" android:name=\"de.appplant.cordova.plugin.notification.TriggerReceiver\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<receiver android:exported=\"false\" android:name=\"de.appplant.cordova.plugin.notification.ClearReceiver\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<receiver android:exported=\"false\" android:name=\"de.appplant.cordova.plugin.localnotification.RestoreReceiver\"><intent-filter><action android:name=\"android.intent.action.BOOT_COMPLETED\" /></intent-filter></receiver>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<activity android:exported=\"false\" android:launchMode=\"singleInstance\" android:name=\"de.appplant.cordova.plugin.notification.ClickActivity\" android:theme=\"@android:style/Theme.NoDisplay\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 2
+                        }
+                    ]
+                }
             }
         }
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
+        "com.cesidiodibenedetto.filechooser": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
-        "cordova-sqlite-storage": {
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
         "cordova-plugin-file": {
@@ -114,30 +150,35 @@
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
         "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
-        "com.cesidiodibenedetto.filechooser": {
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
-        "cordova-plugin-device": {
+        "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         }
     },
     "dependent_plugins": {},
     "modules": [
         {
-            "file": "plugins/cordova-plugin-whitelist/whitelist.js",
-            "id": "cordova-plugin-whitelist.whitelist",
-            "pluginId": "cordova-plugin-whitelist",
-            "runs": true
+            "file": "plugins/com.cesidiodibenedetto.filechooser/www/filechooser.js",
+            "id": "com.cesidiodibenedetto.filechooser.FileChooser",
+            "pluginId": "com.cesidiodibenedetto.filechooser",
+            "clobbers": [
+                "FileChooser"
+            ]
         },
         {
-            "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-            "id": "cordova-sqlite-storage.SQLitePlugin",
-            "pluginId": "cordova-sqlite-storage",
+            "file": "plugins/cordova-plugin-device/www/device.js",
+            "id": "cordova-plugin-device.device",
+            "pluginId": "cordova-plugin-device",
             "clobbers": [
-                "SQLitePlugin"
+                "device"
             ]
         },
         {
@@ -324,6 +365,12 @@
             ]
         },
         {
+            "file": "plugins/cordova-plugin-whitelist/whitelist.js",
+            "id": "cordova-plugin-whitelist.whitelist",
+            "pluginId": "cordova-plugin-whitelist",
+            "runs": true
+        },
+        {
             "file": "plugins/cordova-plugin-x-toast/www/Toast.js",
             "id": "cordova-plugin-x-toast.Toast",
             "pluginId": "cordova-plugin-x-toast",
@@ -337,29 +384,31 @@
             "pluginId": "cordova-plugin-x-toast"
         },
         {
-            "file": "plugins/com.cesidiodibenedetto.filechooser/www/filechooser.js",
-            "id": "com.cesidiodibenedetto.filechooser.FileChooser",
-            "pluginId": "com.cesidiodibenedetto.filechooser",
+            "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+            "id": "cordova-sqlite-storage.SQLitePlugin",
+            "pluginId": "cordova-sqlite-storage",
             "clobbers": [
-                "FileChooser"
+                "SQLitePlugin"
             ]
         },
         {
-            "file": "plugins/cordova-plugin-device/www/device.js",
-            "id": "cordova-plugin-device.device",
-            "pluginId": "cordova-plugin-device",
+            "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification.js",
+            "id": "de.appplant.cordova.plugin.local-notification.LocalNotification",
+            "pluginId": "de.appplant.cordova.plugin.local-notification",
             "clobbers": [
-                "device"
+                "cordova.plugins.notification.local",
+                "plugin.notification.local"
             ]
         }
     ],
     "plugin_metadata": {
-        "cordova-plugin-whitelist": "1.2.0",
-        "cordova-sqlite-storage": "0.7.15-pre",
+        "com.cesidiodibenedetto.filechooser": "1.0.0",
+        "cordova-plugin-device": "1.1.1",
         "cordova-plugin-file": "4.1.0",
         "cordova-plugin-file-transfer": "1.5.0",
+        "cordova-plugin-whitelist": "1.2.0",
         "cordova-plugin-x-toast": "2.3.2",
-        "com.cesidiodibenedetto.filechooser": "1.0.0",
-        "cordova-plugin-device": "1.1.1"
+        "cordova-sqlite-storage": "0.7.15-pre",
+        "de.appplant.cordova.plugin.local-notification": "0.8.1"
     }
 }

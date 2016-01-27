@@ -7,10 +7,10 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
+        "com.cesidiodibenedetto.filechooser": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
-        "cordova-sqlite-storage": {
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
         "cordova-plugin-file": {
@@ -19,13 +19,16 @@
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.beta.schoolTimetable"
+        },
         "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
-        "com.cesidiodibenedetto.filechooser": {
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         },
-        "cordova-plugin-device": {
+        "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.beta.schoolTimetable"
         }
     },

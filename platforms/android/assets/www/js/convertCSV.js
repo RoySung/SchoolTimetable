@@ -30,7 +30,7 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     fileName = "SchoolTimeTable_";
     fileName += ReportTitle.replace(/ /g, "_");
 
-    uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+    uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(CSV);
     link = document.createElement("a");
     link.href = uri;
     link.style = "visibility:hidden";

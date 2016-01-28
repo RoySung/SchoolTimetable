@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Load style.css -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/loader.css">
 </head>
 
 <body>
@@ -268,6 +269,7 @@
             </div>
         </div>
     </div>
+    <div class="loader"></div>
 </body>
 
 </html>
@@ -284,6 +286,8 @@ var timeTable;
 var db;
 
 function onDeviceReady() {
+    $(".loader").fadeOut(4000);
+
     timeTable = new timeTable();
     db = window.sqlitePlugin.openDatabase({
         name: "schoolTimeTable.db"

@@ -11,15 +11,32 @@
 //         test: "test data"
 //     }
 // }
+// 
+var callbackIds = function(ids) {
+    console.log(ids.length === 0 ? '- none -' : ids.join(' ,'));
+};
+getIds = function() {
+    cordova.plugins.notification.local.getIds(callbackIds);
+};
+
+callback = function() {
+    cordova.plugins.notification.local.getIds(function(ids) {
+        console.log(ids.length === 0 ? '- none -' : ids.join(' ,'));
+    });
+};
+
 function cancelAll() {
     console.log("Cancel All Schedule");
-    // cordova.plugins.notification.local.cancelAll();
+    cordova.plugins.notification.local.cancelAll(callback);
 }
+
 
 function setSchedule() {
 	var scheduleArray = setScheduleArray();
     console.log(scheduleArray);
-    // cordova.plugins.notification.local.schedule(scheduleArray);
+    cordova.plugins.notification.local.schedule(scheduleArray,function(){
+    	getIds();
+    });
 }
 
 function initScheduleObj () {
@@ -38,14 +55,13 @@ function setScheduleArray(){
     for (var i = timeTable.data.tableField.length - 1; i >= 0; i--) {
     	for (var j = timeTable.data.tableField[i].length - 1; j >= 0; j--) {
     			if (timeTable.data.tableField[i][j].isRemind) {
-    				console.log("i= " + i + "j= " + j);
     				var firstAt = convertRemindTime(i, j, timeTable.data.tableField[i][j].remindTime);
-    				console.log(firstAt);
+    				// console.log(firstAt);
     				var scheduleObj = initScheduleObj();
     				scheduleObj.id = x;
     				scheduleObj.firstAt = firstAt;
     				scheduleObj.text = "Next Class is " + timeTable.data.tableField[i][j].course + ", Class Room in the " + timeTable.data.tableField[i][j].classRoom;
-    				console.log(scheduleObj);
+    				// console.log(scheduleObj);
     				scheduleArray.push(scheduleObj);
     				x++;
     			};

@@ -67,7 +67,6 @@ function edit() {
 
 function save() {
     for (var i = 0; i < timeTable.onSelected.length; i++) {
-        console.log(timeTable.onSelected[i]);
         var course = document.getElementById("input_class_name").value;
         var classRoom = document.getElementById("input_class_room").value;
         var isRemind = document.getElementById("remindCheckbox").checked;
@@ -98,6 +97,7 @@ function restore() {
 }
 
 function reset() {
+    cancelAll();
     clearSelected();
     if (device.platform == "Android") {
         initTableField();

@@ -54,6 +54,8 @@
                 <span id="ModeIcon" aria-hidden="true"></span>
             </button>
         </div>
+        <div id="today" class="text-center" style="padding: 0px;margin-right: 0px;    font-weight: bold;
+    font-size: 24px;">Today</div>
         <div>
             <table id="tableArea" class="table table-bordered">
                 <colgroup>
@@ -86,10 +88,18 @@
                     <h4 id="classInfo-title" class="modal-title">Class Information</h4>
                 </div>
                 <div class="modal-body">
-                    <span>ClassName:</span><span id="classInfo-className"></span><br><br>
-                    <span>ClassRoom:</span><span id="classInfo-classRoom"></span><br><br>
-                    <span>RemindMe:</span><span id="classInfo-remindMe"></span><br><br>
-                    <span id="classInfoText-remindTime">RemindTime:</span><span id="classInfo-remindTime"></span><br><br>
+                    <span>ClassName:</span><span id="classInfo-className"></span>
+                    <br>
+                    <br>
+                    <span>ClassRoom:</span><span id="classInfo-classRoom"></span>
+                    <br>
+                    <br>
+                    <span>RemindMe:</span><span id="classInfo-remindMe"></span>
+                    <br>
+                    <br>
+                    <span id="classInfoText-remindTime">RemindTime:</span><span id="classInfo-remindTime"></span>
+                    <br>
+                    <br>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -168,7 +178,7 @@
                     <div class="form-group">
                         <input type="file" id="ImportFile">
                         <button type="button" class="btn btn-default" id="ImportFile_android">Select File</button>
-                        <p id="path_android" >Path</p>
+                        <p id="path_android">Path</p>
                         <p class="help-block">Select json file to import.</p>
                     </div>
                 </div>
@@ -287,7 +297,24 @@ var db;
 
 function onDeviceReady() {
     $(".loader").fadeOut(4000);
-
+    var today = new Date();
+    var txtHead = [{
+        "week": "Sun"
+    }, {
+        "week": "Mon"
+    }, {
+        "week": "Tue"
+    }, {
+        "week": "Wed"
+    }, {
+        "week": "Thu"
+    }, {
+        "week": "Fri"
+    }, {
+        "week": "Sat"
+    }];
+    var today_format = today.getFullYear() + "/" + today.getMonth() + 1 + "/" + today.getDate() + " " + txtHead[today.getDay()].week;
+    $('#today').html(today_format);
     timeTable = new timeTable();
     db = window.sqlitePlugin.openDatabase({
         name: "schoolTimeTable.db"
@@ -300,8 +327,8 @@ function onDeviceReady() {
     if (device.platform == "Android") {
         $('#ImportFile').addClass('displayNone');
         loadDB();
-        $('#ImportFile_android').click( function(e) {
-            filechooser.open( {}, function(data) {
+        $('#ImportFile_android').click(function(e) {
+            filechooser.open({}, function(data) {
                 $('#ImportFile')[0].files[0] = data.filepath.split("/storage/emulated/0/");
                 console.log(data.filepath);
                 $('#path_android').html($('#ImportFile')[0].files[0]);
@@ -314,7 +341,7 @@ function onDeviceReady() {
         $('#path_android').addClass('displayNone');
         initTableField();
     }
-    
+
 }
 
 function timeTable() {
@@ -324,6 +351,4 @@ function timeTable() {
     this.data = new Object();
     this.onSelected = new Array();
 }
-
-
 </script>

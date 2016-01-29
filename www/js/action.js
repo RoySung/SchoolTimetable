@@ -59,7 +59,7 @@ function edit() {
     console.log(timeTable.onSelected);
     if (timeTable.onSelected.length != 0) {
         modalController('#modal-ClassEdit', "show");
-        document.getElementById("remindSelect").disabled=true;
+        document.getElementById("remindSelect").disabled = true;
     } else {
         modalController('#modal-SelectAlert', "show");
     };
@@ -72,7 +72,7 @@ function save() {
         var isRemind = document.getElementById("remindCheckbox").checked;
         if (isRemind) {
             var remindTime = document.getElementById("remindSelect").options[document.getElementById("remindSelect").selectedIndex].value;
-        } else{
+        } else {
             var remindTime = "";
         };
         timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].course = course;
@@ -91,7 +91,7 @@ function restore() {
         loadDB();
     } else if (device.platform == "browser") {
         initTableField();
-        setData();   
+        setData();
     }
     modalController('#modal-RestoreAlert', "hide");
 }
@@ -107,9 +107,9 @@ function reset() {
         clearSelected();
     } else if (device.platform == "browser") {
         initTableField();
-        setData();   
+        setData();
     }
-    modalController('#modal-Reset', "hide");   
+    modalController('#modal-Reset', "hide");
 }
 
 function clearSelected() {
@@ -126,14 +126,32 @@ function ClassEvent() {
     switch (timeTable.mode) {
         case "view":
             console.log(timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1]);
-            document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].course;
-            document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].classRoom;
+            var txtHead = [{
+                "week": "Mon"
+            }, {
+                "week": "Tue"
+            }, {
+                "week": "Wed"
+            }, {
+                "week": "Thu"
+            }, {
+                "week": "Fri"
+            }, {
+                "week": "Sat"
+            }, {
+                "week": "Sun"
+            }];
+            var period = this.parentNode.rowIndex;
+            var day = this.cellIndex;
+            document.getElementById("classInfo-title").innerHTML = txtHead[day-1].week + " - The " + period + " Class"
+            document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[period - 1][day - 1].course;
+            document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[period - 1][day - 1].classRoom;
             if (timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].isRemind) {
                 document.getElementById("classInfo-remindMe").innerHTML = " Yes ";
-                document.getElementById("classInfo-remindTime").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].remindTime;;
+                document.getElementById("classInfo-remindTime").innerHTML = timeTable.data.tableField[period - 1][day - 1].remindTime;;
                 document.getElementById("classInfo-remindTime").className = "displayTrue";
                 document.getElementById("classInfoText-remindTime").className = "displayTrue";
-            } else{
+            } else {
                 document.getElementById("classInfo-remindMe").innerHTML = " No ";
                 document.getElementById("classInfo-remindTime").className = "displayNone";
                 document.getElementById("classInfoText-remindTime").className = "displayNone";
@@ -198,7 +216,7 @@ function importCSV() {
     setMode();
     if (device.platform == "Android") {
         //In Android
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
             fileSystem.root.getFile(file[1], {
                 create: true,
                 exclusive: false

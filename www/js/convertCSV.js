@@ -40,7 +40,7 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     if (device.platform == "Android") {
         Filecontroller("write", fileName + ".csv", CSV);
         //For Android
-        window.plugins.toast.showLongBottom('Export CSV , Name :' + fileName + ".csv", function(a) {
+        window.plugins.toast.showLongBottom('匯出 CSV , 檔案名稱 :' + fileName + ".csv", function(a) {
             console.log('toast Export CSV Success');
         }, function(b) {
             alert('toast error: ' + b)

@@ -133,19 +133,19 @@ function ClassEvent() {
         case "view":
             console.log(timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1]);
             var txtHead = [{
-                "week": "Mon"
+                "week": "星期一"
             }, {
-                "week": "Tue"
+                "week": "星期二"
             }, {
-                "week": "Wed"
+                "week": "星期三"
             }, {
-                "week": "Thu"
+                "week": "星期四"
             }, {
-                "week": "Fri"
+                "week": "星期五"
             }, {
-                "week": "Sat"
+                "week": "星期六"
             }, {
-                "week": "Sun"
+                "week": "星期日"
             }];
             var period = this.parentNode.rowIndex;
             var day = this.cellIndex;
@@ -153,12 +153,12 @@ function ClassEvent() {
             document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[period - 1][day - 1].course;
             document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[period - 1][day - 1].classRoom;
             if (timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].isRemind) {
-                document.getElementById("classInfo-remindMe").innerHTML = " Yes ";
+                document.getElementById("classInfo-remindMe").innerHTML = " 開啟 ";
                 document.getElementById("classInfo-remindTime").innerHTML = timeTable.data.tableField[period - 1][day - 1].remindTime;;
                 document.getElementById("classInfo-remindTime").className = "displayTrue";
                 document.getElementById("classInfoText-remindTime").className = "displayTrue";
             } else {
-                document.getElementById("classInfo-remindMe").innerHTML = " No ";
+                document.getElementById("classInfo-remindMe").innerHTML = " 關閉 ";
                 document.getElementById("classInfo-remindTime").className = "displayNone";
                 document.getElementById("classInfoText-remindTime").className = "displayNone";
             };

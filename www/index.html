@@ -88,10 +88,10 @@
                     <h4 id="classInfo-title" class="modal-title">Class Information</h4>
                 </div>
                 <div class="modal-body">
-                    <span>課程名稱:</span><span id="classInfo-className"></span><br><br>
-                    <span>課程教室:</span><span id="classInfo-classRoom"></span><br><br>
-                    <span>提醒:</span><span id="classInfo-remindMe"></span><br><br>
-                    <span id="classInfoText-remindTime">提醒時間:</span><span id="classInfo-remindTime"></span><br><br>
+                    <span>課程名稱:　</span><span id="classInfo-className"></span><br><br>
+                    <span>課程教室:　</span><span id="classInfo-classRoom"></span><br><br>
+                    <span>提醒:　</span><span id="classInfo-remindMe"></span><br><br>
+                    <span id="classInfoText-remindTime">提醒時間:　</span><span id="classInfo-remindTime"></span><br><br>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
@@ -124,10 +124,10 @@
                                 </label>
                             </div>
                             <select id="remindSelect" class="form-control">
-                                <option value="5"> 5 minute </option>
-                                <option value="10"> 10 minute </option>
-                                <option value="15"> 15 minute </option>
-                                <option value="30"> 30 minute </option>
+                                <option value="5"> 5 分鐘前 </option>
+                                <option value="10"> 10 分鐘前 </option>
+                                <option value="15"> 15 分鐘前 </option>
+                                <option value="30"> 30 分鐘前 </option>
                             </select>
                         </div>
                     </form>
@@ -189,7 +189,7 @@
                     <h4 class="modal-title">關於我們</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Here is some directions about software.</p>
+                    <p>感謝支持，如有問題歡迎來信詢問</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
@@ -290,19 +290,19 @@ function onDeviceReady() {
     $(".loader").fadeOut(4000);
     var today = new Date();
     var txtHead = [{
-        "week": "Sun"
+        "week": "星期天"
     }, {
-        "week": "Mon"
+        "week": "星期一"
     }, {
-        "week": "Tue"
+        "week": "星期二"
     }, {
-        "week": "Wed"
+        "week": "星期三"
     }, {
-        "week": "Thu"
+        "week": "星期四"
     }, {
-        "week": "Fri"
+        "week": "星期五"
     }, {
-        "week": "Sat"
+        "week": "星期六"
     }];
     var today_format = today.getFullYear() + "/" + today.getMonth() + 1 + "/" + today.getDate() + " " + txtHead[today.getDay()].week;
     $('#today').html(today_format);

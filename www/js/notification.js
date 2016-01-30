@@ -40,7 +40,7 @@ function setSchedule() {
 function initScheduleObj () {
 	return {
 		"id" : null,
-		"title" : "Remind",
+		"title" : "課程提醒",
 		"text" : null,
 		"firstAt" : null,
 		"every" : "week",
@@ -59,7 +59,7 @@ function setScheduleArray(){
     				var scheduleObj = initScheduleObj();
     				scheduleObj.id = x;
     				scheduleObj.firstAt = firstAt;
-    				scheduleObj.text = "Class Time " + (firstAt.getHours() + 1) + " o'clock" +", 	Next Class is " + timeTable.data.tableField[i][j].course + ", Class Room in the " + timeTable.data.tableField[i][j].classRoom;
+    				scheduleObj.text = "課程時間 " + (firstAt.getHours() + 1) + "點" + ",下一節課是 " + timeTable.data.tableField[i][j].course + ",教室位在 " + timeTable.data.tableField[i][j].classRoom;
     				// console.log(scheduleObj);
     				scheduleArray.push(scheduleObj);
     				x++;

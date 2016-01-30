@@ -46,13 +46,16 @@ function switchWeekType() {
 
 function saveChange() {
     // save change and switch to view
-    cancelAll();
+    cancelAll(function(){
+        console.log("CancelAll done");
+        getIds();
+        setSchedule();
+    });
     modalController('#modal-SaveAlert', "hide");
     updateDB(1, "tableField", JSON.stringify(timeTable.data.tableField));
     clearSelected();
     timeTable.mode = "view";
     setMode();
-    setSchedule();
 }
 
 function edit() {
@@ -97,7 +100,10 @@ function restore() {
 }
 
 function reset() {
-    cancelAll();
+    cancelAll(function(){
+        console.log("CancelAll done");
+        getIds();
+    });
     clearSelected();
     if (device.platform == "Android") {
         initTableField();

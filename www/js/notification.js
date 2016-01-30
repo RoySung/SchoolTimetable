@@ -12,26 +12,24 @@
 //     }
 // }
 // 
-var callbackIds = function(ids) {
-    console.log(ids.length === 0 ? '- none -' : ids.join(' ,'));
-};
-getIds = function() {
-    cordova.plugins.notification.local.getIds(callbackIds);
-};
-
-callback = function() {
-    cordova.plugins.notification.local.getIds(function(ids) {
-        console.log(ids.length === 0 ? '- none -' : ids.join(' ,'));
+function getIds() {
+    cordova.plugins.notification.local.getIds(function(ids){
+    	console.log(ids.length === 0 ? '- none -' : ids.join(' ,'));
     });
 };
 
-function cancelAll() {
+function cancelAll(done) {
     console.log("Cancel All Schedule");
-    cordova.plugins.notification.local.cancelAll(callback);
+    cordova.plugins.notification.local.getIds(function(scheduledIds) {
+    	for (var i = 0; scheduledIds.length > i; i++) {
+			cordova.plugins.notification.local.cancel(scheduledIds[i]);
+		}
+    });
+    done();
 }
 
-
 function setSchedule() {
+	console.log("setSchedule");
 	var scheduleArray = setScheduleArray();
     console.log(scheduleArray);
     cordova.plugins.notification.local.schedule(scheduleArray,function(){

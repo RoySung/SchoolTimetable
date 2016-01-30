@@ -149,7 +149,7 @@ function ClassEvent() {
             }];
             var period = this.parentNode.rowIndex;
             var day = this.cellIndex;
-            document.getElementById("classInfo-title").innerHTML = txtHead[day-1].week + " - The " + period + " Class"
+            document.getElementById("classInfo-title").innerHTML = txtHead[day-1].week + " - 第 " + period + " 節課"
             document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[period - 1][day - 1].course;
             document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[period - 1][day - 1].classRoom;
             if (timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].isRemind) {

@@ -43,7 +43,8 @@ function initScheduleObj () {
 		"title" : "Remind",
 		"text" : null,
 		"firstAt" : null,
-		"every" : "week"	
+		"every" : "week",
+		"sound": "file://bells.mp3"	
 	}
 }
 

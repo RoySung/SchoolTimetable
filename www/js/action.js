@@ -46,6 +46,11 @@ function switchWeekType() {
 
 function saveChange() {
     // save change and switch to view
+    cancelAll(function(){
+        console.log("CancelAll done");
+        getIds();
+        setSchedule();
+    });
     modalController('#modal-SaveAlert', "hide");
     updateDB(1, "tableField", JSON.stringify(timeTable.data.tableField));
     clearSelected();
@@ -57,6 +62,7 @@ function edit() {
     console.log(timeTable.onSelected);
     if (timeTable.onSelected.length != 0) {
         modalController('#modal-ClassEdit', "show");
+        document.getElementById("remindSelect").disabled = true;
     } else {
         modalController('#modal-SelectAlert', "show");
     };
@@ -64,11 +70,19 @@ function edit() {
 
 function save() {
     for (var i = 0; i < timeTable.onSelected.length; i++) {
-        console.log(timeTable.onSelected[i]);
         var course = document.getElementById("input_class_name").value;
         var classRoom = document.getElementById("input_class_room").value;
-        timeTable.data.tableField[timeTable.onSelected[i].row-1][timeTable.onSelected[i].cell-1].course = course;
-        timeTable.data.tableField[timeTable.onSelected[i].row-1][timeTable.onSelected[i].cell-1].classRoom = classRoom;
+        var isRemind = document.getElementById("remindCheckbox").checked;
+        if (isRemind) {
+            var remindTime = document.getElementById("remindSelect").options[document.getElementById("remindSelect").selectedIndex].value;
+        } else {
+            var remindTime = "";
+        };
+        timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].course = course;
+        timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].classRoom = classRoom;
+        timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].isRemind = isRemind;
+        timeTable.data.tableField[timeTable.onSelected[i].row - 1][timeTable.onSelected[i].cell - 1].remindTime = remindTime;
+
     };
     modalController('#modal-ClassEdit', "hide");
     setData();
@@ -76,7 +90,32 @@ function save() {
 
 function restore() {
     clearSelected();
+    if (device.platform == "Android") {
+        loadDB();
+    } else if (device.platform == "browser") {
+        initTableField();
+        setData();
+    }
     modalController('#modal-RestoreAlert', "hide");
+}
+
+function reset() {
+    cancelAll(function(){
+        console.log("CancelAll done");
+        getIds();
+    });
+    clearSelected();
+    if (device.platform == "Android") {
+        initTableField();
+        modalController('#modal-SaveAlert', "hide");
+        updateDB(1, "tableField", JSON.stringify(timeTable.data.tableField));
+        setData();
+        clearSelected();
+    } else if (device.platform == "browser") {
+        initTableField();
+        setData();
+    }
+    modalController('#modal-Reset', "hide");
 }
 
 function clearSelected() {
@@ -92,9 +131,37 @@ function ClassEvent() {
     var table = document.getElementById("tableArea");
     switch (timeTable.mode) {
         case "view":
-            console.log(timeTable.data.tableField[this.parentNode.rowIndex-1][this.cellIndex-1]);
-            document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex-1][this.cellIndex-1].course;
-            document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[this.parentNode.rowIndex-1][this.cellIndex-1].classRoom;
+            console.log(timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1]);
+            var txtHead = [{
+                "week": "星期一"
+            }, {
+                "week": "星期二"
+            }, {
+                "week": "星期三"
+            }, {
+                "week": "星期四"
+            }, {
+                "week": "星期五"
+            }, {
+                "week": "星期六"
+            }, {
+                "week": "星期日"
+            }];
+            var period = this.parentNode.rowIndex;
+            var day = this.cellIndex;
+            document.getElementById("classInfo-title").innerHTML = txtHead[day-1].week + " - 第 " + period + " 節課"
+            document.getElementById("classInfo-className").innerHTML = timeTable.data.tableField[period - 1][day - 1].course;
+            document.getElementById("classInfo-classRoom").innerHTML = timeTable.data.tableField[period - 1][day - 1].classRoom;
+            if (timeTable.data.tableField[this.parentNode.rowIndex - 1][this.cellIndex - 1].isRemind) {
+                document.getElementById("classInfo-remindMe").innerHTML = " 開啟 ";
+                document.getElementById("classInfo-remindTime").innerHTML = timeTable.data.tableField[period - 1][day - 1].remindTime;;
+                document.getElementById("classInfo-remindTime").className = "displayTrue";
+                document.getElementById("classInfoText-remindTime").className = "displayTrue";
+            } else {
+                document.getElementById("classInfo-remindMe").innerHTML = " 關閉 ";
+                document.getElementById("classInfo-remindTime").className = "displayNone";
+                document.getElementById("classInfoText-remindTime").className = "displayNone";
+            };
             modalController('#modal-ClassInfo', "show");
             break;
         case "edit":
@@ -147,29 +214,58 @@ function exportCSV() {
 
 function importCSV() {
     var file = $('#ImportFile')[0].files[0];
-    if(file == null) {
+    if (file == null) {
         alert("Please Select File.");
         return;
     }
-    if (file.type.match(/text\/csv/) || file.type.match(/vnd\.ms-excel/)) {
-        oFReader = new FileReader();
-        oFReader.onloadend = function() {
-            var json = csvJSON(this.result);
-            var inputData = JSON.parse(json);
-            timeTable.data.tableName = inputData[inputData.length - 1].period;
-            timeTable.data.tableType = inputData[inputData.length - 1].day;
-            for (var i = 0; i < inputData.length - 1; i++) {
-                period = inputData[i].period - 1;
-                day = inputData[i].day - 1;
-                timeTable.data.tableField[period][day].course = inputData[i].course;
-                timeTable.data.tableField[period][day].classRoom = inputData[i].classRoom;
-                timeTable.data.tableField[period][day].isRemind = inputData[i].isRemind;
-                timeTable.data.tableField[period][day].remindTime = inputData[i].remindTime;
-                timeTable.data.tableField[period][day].cellColor = inputData[i].cellColor;
-            }
-        };
-        oFReader.readAsText(file);
-    } else {
-        console.log("This file does not seem to be a CSV.");
+    timeTable.mode = "edit";
+    setMode();
+    if (device.platform == "Android") {
+        //In Android
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+            fileSystem.root.getFile(file[1], {
+                create: true,
+                exclusive: false
+            }, function(fileEntry) {
+                fileEntry.file(function(file) {
+                    var reader = new FileReader();
+                    reader.readAsText(file);
+                    reader.onloadend = function(e) {
+                        var json = csvJSON(this.result);
+                        importData(json);
+                        $('#path_android').html('Path');
+                        $('#ImportFile')[0].files[0] = null;
+                    };
+                }, errorHandler);
+            }, errorHandler);
+        }, errorHandler);
+    } else if (device.platform == "browser") {
+        if (file.type.match(/text\/csv/) || file.type.match(/vnd\.ms-excel/)) {
+            oFReader = new FileReader();
+            oFReader.readAsText(file);
+            oFReader.onloadend = function() {
+                var json = csvJSON(this.result);
+                importData(json);
+            };
+        } else {
+            console.log("This file does not seem to be a CSV.");
+        }
     }
+    $('#modal-Import').modal('hide');
+}
+
+function importData(json) {
+    var inputData = JSON.parse(json);
+    timeTable.data.tableName = inputData[inputData.length - 1].period;
+    timeTable.data.tableType = inputData[inputData.length - 1].day;
+    for (var i = 0; i < inputData.length - 1; i++) {
+        period = inputData[i].period - 1;
+        day = inputData[i].day - 1;
+        timeTable.data.tableField[period][day].course = inputData[i].course;
+        timeTable.data.tableField[period][day].classRoom = inputData[i].classRoom;
+        timeTable.data.tableField[period][day].isRemind = inputData[i].isRemind;
+        timeTable.data.tableField[period][day].remindTime = inputData[i].remindTime;
+        timeTable.data.tableField[period][day].cellColor = inputData[i].cellColor;
+    }
+    setData();
 }

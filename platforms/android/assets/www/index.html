@@ -17,10 +17,10 @@
 
 <body>
     <!-- Header Navbar -->
-    <nav id="header" class="navbar navbar-default" role="navigation">
-        <a class="navbar-brand">SchoolTimeTable</a>
+    <nav id="header" class="navbar navbar-default header" role="navigation">
+        <a class="navbar-brand title">SchoolTimeTable</a>
         <div id="dropdown-menu" class="dropdown pull-right">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="btn btn-default dropdown-toggle btn-menu" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -28,26 +28,28 @@
                 <li role="separator" class="divider"></li>
                 <li><a data-toggle="modal" href='#modal-Import'>Import</a></li>
                 <li role="separator" class="divider"></li>
+                <li><a data-toggle="modal" href='#modal-Reset'>Reset</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a data-toggle="modal" href='#modal-About'>About</a></li>
             </ul>
         </div>
     </nav>
     <!-- Container -->
     <div class="container">
-        <button type="button" class="btn btn-default" onclick="switchTableType()">
+        <button type="button" class="btn btn-default btn-menu" onclick="switchTableType()">
             <span id="tableTypeIcon" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-default" onclick="switchWeekType()">
+        <button type="button" class="btn btn-default btn-menu" onclick="switchWeekType()">
             <span id="weekTypeIcon" aria-hidden="true"></span>
         </button>
         <div class="pull-right">
-            <button type="button" id="editBtn" class="btn btn-default" onclick="edit()">
+            <button type="button" id="editBtn" class="btn btn-default btn-menu" onclick="edit()">
                 <span id="edit" class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
             </button>
-            <button type="button" id="restoreBtn" class="btn btn-default" onclick="modalController('#modal-RestoreAlert','show');">
+            <button type="button" id="restoreBtn" class="btn btn-default btn-menu" onclick="modalController('#modal-RestoreAlert','show');">
                 <span id="restore" class="fa fa-fw fa-retweet" aria-hidden="true"></span>
             </button>
-            <button type="button" class="btn btn-default" onclick="switchMode()">
+            <button type="button" class="btn btn-default btn-menu" onclick="switchMode()">
                 <span id="ModeIcon" aria-hidden="true"></span>
             </button>
         </div>
@@ -85,6 +87,8 @@
                 <div class="modal-body">
                     <span>ClassName:</span><span id="classInfo-className"></span><br><br>
                     <span>ClassRoom:</span><span id="classInfo-classRoom"></span><br><br>
+                    <span>RemindMe:</span><span id="classInfo-remindMe"></span><br><br>
+                    <span id="classInfoText-remindTime">RemindTime:</span><span id="classInfo-remindTime"></span><br><br>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -110,16 +114,20 @@
                             <label for="">Class Room</label>
                             <input type="text" class="form-control" id="input_class_room">
                         </div>
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="remind"> Checkbox
+                                    <input id="remindCheckbox" type="checkbox" value="remind" onchange="setRemind(this)"> Remind Me
                                 </label>
                             </div>
-                            <select id="input" class="form-control">
-                                <option value=""> Select One </option>
+                            <select id="remindSelect" class="form-control">
+                                <option value="3"> 3 minute </option>
+                                <option value="5"> 5 minute </option>
+                                <option value="10"> 10 minute </option>
+                                <option value="15"> 15 minute </option>
+                                <option value="30"> 30 minute </option>
                             </select>
-                        </div> -->
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -158,6 +166,8 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="file" id="ImportFile">
+                        <button type="button" class="btn btn-default" id="ImportFile_android">Select File</button>
+                        <p id="path_android" >Path</p>
                         <p class="help-block">Select json file to import.</p>
                     </div>
                 </div>
@@ -239,6 +249,25 @@
             </div>
         </div>
     </div>
+    <!--  -->
+    <div class="modal fade" id="modal-Reset">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Restore</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to reset you time table?</p>
+                    <p>You will loss your every data</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="reset()">Yes,Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
@@ -247,6 +276,7 @@
 <script type="text/javascript" src="js/action.js"></script>
 <script type="text/javascript" src="js/database.js"></script>
 <script type="text/javascript" src="js/convertCSV.js"></script>
+<script type="text/javascript" src="js/file.js"></script>
 <script type="text/javascript">
 document.addEventListener("deviceready", onDeviceReady, false);
 var timeTable;
@@ -261,9 +291,25 @@ function onDeviceReady() {
     setWeekType();
     setTableType();
     setMode();
-    // initTableField();
-    // setData();
-    loadDB();
+    //For Android 4.4
+    if (device.platform == "Android") {
+        $('#ImportFile').addClass('displayNone');
+        loadDB();
+        $('#ImportFile_android').click( function(e) {
+            filechooser.open( {}, function(data) {
+                $('#ImportFile')[0].files[0] = data.filepath.split("/storage/emulated/0/");
+                console.log(data.filepath);
+                $('#path_android').html($('#ImportFile')[0].files[0]);
+            }, function(e) {
+                console.log("Error:" + e);
+            });
+        });
+    } else if (device.platform == "browser") {
+        $('#ImportFile_android').addClass('displayNone');
+        $('#path_android').addClass('displayNone');
+        initTableField();
+    }
+    
 }
 
 function timeTable() {
@@ -273,4 +319,6 @@ function timeTable() {
     this.data = new Object();
     this.onSelected = new Array();
 }
+
+
 </script>

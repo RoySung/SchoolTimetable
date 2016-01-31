@@ -7,19 +7,19 @@ function setTimeTable() {
     var tableBody = document.getElementById("tableBodyArea");
     // append table head
     var txtHead = [{
-        "week": "Mon"
+        "week": "一"
     }, {
-        "week": "Tue"
+        "week": "二"
     }, {
-        "week": "Wed"
+        "week": "三"
     }, {
-        "week": "Thu"
+        "week": "四"
     }, {
-        "week": "Fri"
+        "week": "五"
     }, {
-        "week": "Sat"
+        "week": "六"
     }, {
-        "week": "Sun"
+        "week": "日"
     }];
     for (var i = 0; i < tableWeekLenght; i++) {
         var th = document.createElement('th');
@@ -134,11 +134,14 @@ function setData() {
     var tableClassLenght = 15;
     var tableWeekLenght = 7;
     var table = document.getElementById("tableArea");
-    console.log(timeTable.data.tableField);
     for (var i = 0; i < tableClassLenght; i++) {
         for (var j = 0; j < tableWeekLenght; j++) {
             // table.rows[i + 1].cells[j + 1].appendChild(document.createTextNode(timeTable.data.tableField[i][j].course));
             table.rows[i+1].cells[j+1].innerHTML = timeTable.data.tableField[i][j].course;
         }
     }
+}
+
+function setRemind(checkbox) {
+    document.getElementById("remindSelect").disabled = !checkbox.checked;
 }

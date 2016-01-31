@@ -59,7 +59,7 @@ function setScheduleArray(){
     				var scheduleObj = initScheduleObj();
     				scheduleObj.id = x;
     				scheduleObj.firstAt = firstAt;
-    				scheduleObj.text = "Next Class is " + timeTable.data.tableField[i][j].course + ", Class Room in the " + timeTable.data.tableField[i][j].classRoom;
+    				scheduleObj.text = "Class Time " + (firstAt.getHours() + 1) + " o'clock" +", 	Next Class is " + timeTable.data.tableField[i][j].course + ", Class Room in the " + timeTable.data.tableField[i][j].classRoom;
     				// console.log(scheduleObj);
     				scheduleArray.push(scheduleObj);
     				x++;

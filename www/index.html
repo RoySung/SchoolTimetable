@@ -304,7 +304,9 @@ function onDeviceReady() {
     }, {
         "week": "星期六"
     }];
-    var today_format = today.getFullYear() + "/" + today.getMonth() + 1 + "/" + today.getDate() + " " + txtHead[today.getDay()].week;
+    var month = today.getMonth() + 1,
+        day = today.getDate();
+    var today_format = today.getFullYear() + "/" + month + "/" + day + " " + txtHead[today.getDay()].week;
     $('#today').html(today_format);
     timeTable = new timeTable();
     db = window.sqlitePlugin.openDatabase({
